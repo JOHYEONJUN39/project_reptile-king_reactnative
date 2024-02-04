@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BackPage from './pages/BackPage';
+import BackHeader from './components/BackHeader';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+      <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            header: () => <BackHeader title='로그인'/>, // BackHeader 컴포넌트 직접 사용
+          }}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{
+            header: () => <BackHeader title='회원가입'/>,
+          }}
+        />
+        <Stack.Screen
+          name="Back"
+          component={BackPage}
+          options={{
+            header: () => <BackHeader title='메인' />,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

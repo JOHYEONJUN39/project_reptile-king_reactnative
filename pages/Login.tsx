@@ -20,6 +20,7 @@ const Login = (): JSX.Element => {
         <Input
           name='id'
           control={control}
+          placeholder='아이디를 입력해주세요.'
           rules={{
             required: '아이디는 필수 입력항목입니다.',
             minLength: { value: 8, message: '아이디는 최소 8글자여야 합니다.' },
@@ -30,6 +31,7 @@ const Login = (): JSX.Element => {
         <Input
           name='password'
           control={control}
+          placeholder='비밀번호를 입력해주세요.'
           rules={{
             required: '비밀번호를 입력해주세요.',
             minLength: { value: 8, message: '비밀번호는 최소 8글자여야 합니다.' },

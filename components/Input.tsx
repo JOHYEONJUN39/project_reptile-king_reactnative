@@ -2,7 +2,7 @@ import { Text, TextInput, StyleSheet } from 'react-native'
 import { useController } from 'react-hook-form'
 import type { AuthInput } from '../types/Auth'
 
-const Input = ({ name, control, rules }: AuthInput): JSX.Element => {
+const Input = ({ name, control, rules, placeholder }: AuthInput): JSX.Element => {
   const { field, fieldState: { error } } = useController({
     control,
     defaultValue: '',
@@ -16,6 +16,7 @@ const Input = ({ name, control, rules }: AuthInput): JSX.Element => {
         value={field.value}
         onChangeText={field.onChange}
         style={styles.input}
+        placeholder={placeholder}
       />
       {error !== null && error !== undefined && <Text style={styles.error}>{error.message}</Text>}
     </>

@@ -3,14 +3,15 @@ import { useNavigation } from '@react-navigation/native'
 import { useForm } from 'react-hook-form'
 import SubmitButton from '../components/SubmitButton'
 import Input from '../components/Input'
+import Grass from '../components/Grass'
 
 const Login = (): JSX.Element => {
   const { control, handleSubmit } = useForm()
 
   const navigation = useNavigation()
 
-  const handleLogin = (): void => {
-    navigation.navigate('Back' as never) // 'Back' 페이지로 이동
+  const onsubmit = (): void => {
+    navigation.navigate('Market' as never) // 'Back' 페이지로 이동
   }
 
   return (
@@ -42,7 +43,7 @@ const Login = (): JSX.Element => {
             }
           }}
         />
-        <SubmitButton label='로그인' onPress={handleSubmit(handleLogin)} />
+        <SubmitButton label='로그인' onPress={handleSubmit(onsubmit)} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>회원이 아니신가요?</Text>
           <TouchableOpacity onPress={() => { navigation.navigate('SignUp' as never) }}>
@@ -50,6 +51,7 @@ const Login = (): JSX.Element => {
           </TouchableOpacity>
         </View>
       </View>
+      <Grass />
     </View>
   )
 }
@@ -57,7 +59,8 @@ const Login = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#072E0A'
+    backgroundColor: '#072E0A',
+    justifyContent: 'space-between'
   },
   inner: {
     paddingVertical: 24,

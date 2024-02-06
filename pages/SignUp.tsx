@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import SubmitButton from '../components/SubmitButton'
 import { useForm } from 'react-hook-form'
 import Input from '../components/Input'
+import Grass from '../components/Grass'
 
 const SignUp = (): JSX.Element => {
   const { control, handleSubmit, watch } = useForm()
@@ -10,7 +11,7 @@ const SignUp = (): JSX.Element => {
   const navigation = useNavigation()
 
   const onsubmit = (): void => {
-    navigation.navigate('Back' as never) // 'Back' 페이지로 이동
+    navigation.navigate('Market' as never) // 'Back' 페이지로 이동
   }
 
   return (
@@ -20,6 +21,7 @@ const SignUp = (): JSX.Element => {
         <Input
           name='id'
           control={control}
+          placeholder='아이디를 입력해주세요.'
           rules={{
             required: '아이디는 필수 입력항목입니다.',
             minLength: { value: 8, message: '아이디는 최소 8글자여야 합니다.' },
@@ -30,6 +32,7 @@ const SignUp = (): JSX.Element => {
         <Input
           name='password'
           control={control}
+          placeholder='비밀번호를 입력해주세요.'
           rules={{
             required: '비밀번호를 입력해주세요.',
             minLength: { value: 8, message: '비밀번호는 최소 8글자여야 합니다.' },
@@ -44,6 +47,7 @@ const SignUp = (): JSX.Element => {
         <Input
           name='confirmPassword'
           control={control}
+          placeholder='비밀번호를 다시 입력해주세요.'
           rules={{
             validate: value => value === watch('password') || '비밀번호가 일치하지 않습니다.'
           }}
@@ -56,6 +60,7 @@ const SignUp = (): JSX.Element => {
           </TouchableOpacity>
         </View>
       </View>
+      <Grass />
     </View>
   )
 }
@@ -63,7 +68,8 @@ const SignUp = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#072E0A'
+    backgroundColor: '#072E0A',
+    justifyContent: 'space-between'
   },
   inner: {
     paddingVertical: 24,

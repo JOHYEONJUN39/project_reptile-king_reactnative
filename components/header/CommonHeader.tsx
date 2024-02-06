@@ -4,7 +4,7 @@ interface BackHeaderProps {
   title: string
 };
 
-const BackHeader = ({ title }: BackHeaderProps): JSX.Element => {
+const CommonHeader = ({ title }: BackHeaderProps): JSX.Element => {
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default BackHeader
+export default CommonHeader

@@ -1,5 +1,8 @@
 export interface RootStackParamList {
   Login: undefined
   SignUp: undefined
-  Back: undefined
+  Market: undefined
+  Menu: undefined
+  Notify: undefined
+  Cart: undefined
 }

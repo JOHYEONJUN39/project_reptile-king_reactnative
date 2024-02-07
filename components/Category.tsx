@@ -1,7 +1,15 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import type { CategoryList } from '../types/CategoryList'
+import { useNavigation } from '@react-navigation/native'
+import type { ProductNavigationProp } from '../types/RootStackParamList'
 
 const Category = ({ image, name }: CategoryList): JSX.Element => {
+  const navigation = useNavigation<ProductNavigationProp>()
+
+  const handlePress = (): void => {
+    navigation.navigate('Product', { category: name })
+  }
+
   const styles = StyleSheet.create({
     categoryBox: {
       width: 80,
@@ -25,7 +33,7 @@ const Category = ({ image, name }: CategoryList): JSX.Element => {
   })
 
   return (
-    <TouchableOpacity style={styles.categoryBox}>
+    <TouchableOpacity style={styles.categoryBox} onPress={handlePress}>
       <Image source={{ uri: image }} style={styles.categoryImg} />
       <Text style={styles.category}>{name}</Text>
     </TouchableOpacity>

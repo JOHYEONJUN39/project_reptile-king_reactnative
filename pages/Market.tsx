@@ -37,26 +37,6 @@ const Market = (): JSX.Element => {
       minWidth: windowWidth * 0.8,
       flexDirection: 'row',
       overflow: 'scroll'
-    },
-    categoryBox: {
-      width: 60,
-      height: 80,
-      overflow: 'hidden',
-      marginRight: 20,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    categoryImg: {
-      width: 60,
-      height: 60,
-      borderRadius: 40,
-      marginBottom: 4
-    },
-    category: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      textAlign: 'center',
-      color: '#fff'
     }
   })
 

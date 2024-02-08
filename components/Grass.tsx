@@ -2,7 +2,7 @@ import { Image, StyleSheet } from 'react-native'
 
 const Grass = (): JSX.Element => {
   return (
-    <Image source={{ uri: 'https://i.ibb.co/NC5JrQ1/grass.png' }} style={styles.grass} />
+    <Image source={{ uri: 'https://i.postimg.cc/85pPphgy/grass.png' }} style={styles.grass} />
   )
 }
 

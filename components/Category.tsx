@@ -14,6 +14,7 @@ const Category = ({ image, name }: CategoryList): JSX.Element => {
     categoryBox: {
       width: 80,
       height: 80,
+      marginBottom: 10,
       overflow: 'hidden',
       alignItems: 'center',
       justifyContent: 'center'

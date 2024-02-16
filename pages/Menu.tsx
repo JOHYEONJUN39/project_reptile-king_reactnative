@@ -1,10 +1,12 @@
 import { View, StyleSheet, ScrollView, Text } from 'react-native'
 import Category from '../components/Category'
 import type { CategoryList } from '../types/CategoryList'
-import CategoryData from '../assets/categoryData.json'
+import shoppingData from '../assets/shoppingData.json'
+import breedData from '../assets/breedData.json'
 
 const Menu = (): JSX.Element => {
-  const categories: CategoryList[] = CategoryData
+  const products: CategoryList[] = shoppingData
+  const breeds: CategoryList[] = breedData
 
   const styles = StyleSheet.create({
     container: {
@@ -18,13 +20,14 @@ const Menu = (): JSX.Element => {
       flexDirection: 'row',
       backgroundColor: '#1C5B20'
     },
-    shopping: {
+    titleBox: {
       paddingTop: 12,
       paddingHorizontal: 20,
+      marginTop: 20,
       alignItems: 'flex-start',
       backgroundColor: '#1C5B20'
     },
-    text: {
+    title: {
       color: 'white',
       fontSize: 24,
       fontWeight: 'bold'
@@ -34,15 +37,27 @@ const Menu = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.shopping}>
-          <Text style={styles.text} >쇼핑</Text>
+        <View style={styles.titleBox}>
+          <Text style={styles.title} >쇼핑</Text>
         </View>
         <View style={styles.categoryBox}>
-          {categories.map((category, index) => (
+          {products.map((product, index) => (
           <Category
             key={index}
-            name={category.name}
-            image={category.image}
+            name={product.name}
+            image={product.image}
+          />
+          ))}
+        </View>
+        <View style={styles.titleBox}>
+          <Text style={styles.title}>사육</Text>
+        </View>
+        <View style={styles.categoryBox}>
+          {breeds.map((product, index) => (
+          <Category
+            key={index}
+            name={product.name}
+            image={product.image}
           />
           ))}
         </View>

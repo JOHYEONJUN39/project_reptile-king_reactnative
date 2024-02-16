@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text, useWindowDimensions, Image } from 'react-native'
 import type { CategoryList } from '../types/CategoryList'
 import Category from '../components/Category'
-import CategoryData from '../assets/categoryData.json'
+import shoppingData from '../assets/shoppingData.json'
 import Line from '../components/Line'
 import ProductBox from '../components/ProductBox'
 
@@ -47,7 +47,7 @@ const data = [
 const Market = (): JSX.Element => {
   const windowWidth = useWindowDimensions().width
 
-  const categories: CategoryList[] = CategoryData
+  const categories: CategoryList[] = shoppingData
 
   const styles = StyleSheet.create({
     container: {

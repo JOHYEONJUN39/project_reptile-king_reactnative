@@ -9,13 +9,11 @@ const Menu = (): JSX.Element => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#072E0A',
-      justifyContent: 'space-between'
+      backgroundColor: '#072E0A'
     },
     categoryBox: {
-      paddingTop: 12,
-      paddingBottom: 12,
-      paddingHorizontal: 27,
+      paddingVertical: 20,
+      paddingHorizontal: 20,
       flexWrap: 'wrap',
       flexDirection: 'row',
       backgroundColor: '#1C5B20'

@@ -7,10 +7,9 @@ export interface RootStackParamList {
   Menu: undefined
   Notify: undefined
   Cart: undefined
-  Product: { category: string }
-  [key: string]: undefined | { category: string }
+  Product: { category?: string, productCode?: string }
+  [key: string]: undefined | { category?: string, productCode?: string }
 }
 
 export type ProductNavigationProp = NavigationProp<RootStackParamList, 'Product'>
-
 export type ProductRouteProp = RouteProp<RootStackParamList, 'Product'>

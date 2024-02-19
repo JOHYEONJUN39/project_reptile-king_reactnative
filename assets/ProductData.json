@@ -1,0 +1,92 @@
+[
+  {
+    "name": "이탈리아 베네치아 장인의 손으로 만든 사육장",
+    "image": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+    "price": "35,000",
+    "rating": 5,
+    "review": 120,
+    "charge": 0,
+    "code": "001",
+    "seller": "파충의 마술사"
+  },
+  {
+    "name": "베네치아 장인의 이탈리아 제작 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1622996903146_1000.jpeg",
+    "price": "37,000",
+    "rating": 3.7,
+    "review": 98,
+    "charge": 0,
+    "code": "002",
+    "seller": "유재경의 파충류"
+  },
+  {
+    "name": "이탈리아 베네치아의 장인이 만든 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1628667429087_1000.jpg",
+    "price": "33,000",
+    "rating": 4.2,
+    "review": 150,
+    "charge": 0,
+    "code": "003",
+    "seller": "파충상회"
+  },
+  {
+    "name": "장인의 손으로 만들어진 이탈리아 베네치아 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1648530281085_1000.png",
+    "price": "36,000",
+    "rating": 4.8,
+    "review": 110,
+    "charge": 2000,
+    "code": "004",
+    "seller": "파충류의 정석"
+  },
+  {
+    "name": "베네치아 장인이 한땀한땀 만든 이탈리아 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1632978170013_1000.png",
+    "price": "34,000",
+    "rating": 2.3,
+    "review": 105,
+    "charge": 0,
+    "code": "005",
+    "seller": "파충마을"
+  },
+  {
+    "name": "이탈리아 베네치아 장인의 손길이 담긴 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1522164855585_1000.jpg",
+    "price": "35,000",
+    "rating": 4.6,
+    "review": 125,
+    "charge": 3000,
+    "code": "006",
+    "seller": "파충왕국"
+  },
+  {
+    "name": "베네치아 장인의 이탈리아 스타일 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1522165573867_1000.jpg",
+    "price": "32,000",
+    "rating": 4.4,
+    "review": 130,
+    "charge": 0,
+    "code": "007",
+    "seller": "파충마니아"
+  },
+  {
+    "name": "이탈리아 베네치아에서 만들어진 장인의 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1570615293217_1000.jpg",
+    "price": "35,500",
+    "rating": 3.7,
+    "review": 115,
+    "charge": 2000,
+    "code": "008",
+    "seller": "파충가이드"
+  },
+  {
+    "name": "베네치아 장인이 손수 제작한 이탈리 사육장",
+    "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1620533018041_1000.jpg",
+    "price": "34,500",
+    "rating": 4.5,
+    "review": 120,
+    "charge": 0,
+    "code": "009",
+    "seller": "파충탐험대"
+  }
+]

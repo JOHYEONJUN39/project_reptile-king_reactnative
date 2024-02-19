@@ -3,7 +3,7 @@ export interface CategoryList {
   image: string
 }
 
-export interface ProductProps {
+export interface ProductList {
   product: {
     name: string
     image: string
@@ -12,5 +12,17 @@ export interface ProductProps {
     review: number
     charge: number
     code: string
+    seller: string
   }
+}
+
+export interface ProductProps {
+  name: string
+  image: string
+  price: string
+  rating: number
+  review: number
+  charge: number
+  code: string
+  seller: string
 }

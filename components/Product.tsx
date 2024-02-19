@@ -2,9 +2,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import Rating from './Rating'
 import { useNavigation } from '@react-navigation/native'
 import type { ProductNavigationProp } from '../types/RootStackParamList'
-import type { ProductProps } from '../types/ProductType'
+import type { ProductList } from '../types/ProductType'
 
-const Product = ({ product }: ProductProps): JSX.Element => {
+const Product = ({ product }: ProductList): JSX.Element => {
   const { name, image, price, rating, review, charge, code } = product
   const navigation = useNavigation<ProductNavigationProp>()
   const styles = StyleSheet.create({

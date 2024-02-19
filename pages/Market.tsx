@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text, useWindowDimensions, Image } from 'react-native'
-import type { CategoryList } from '../types/CategoryList'
+import type { CategoryList } from '../types/ProductType'
 import Category from '../components/Category'
 import shoppingData from '../assets/shoppingData.json'
 import Line from '../components/Line'

@@ -7,7 +7,7 @@ export interface ProductList {
   product: {
     name: string
     image: string
-    price: string
+    price: number
     rating: number
     review: number
     charge: number
@@ -19,7 +19,7 @@ export interface ProductList {
 export interface ProductProps {
   name: string
   image: string
-  price: string
+  price: number
   rating: number
   review: number
   charge: number

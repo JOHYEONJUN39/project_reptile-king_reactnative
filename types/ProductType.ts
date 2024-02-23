@@ -13,6 +13,7 @@ export interface ProductList {
     charge: number
     code: string
     seller: string
+    contentImage?: string[]
   }
 }
 
@@ -25,4 +26,5 @@ export interface ProductProps {
   charge: number
   code: string
   seller: string
+  contentImage?: string[]
 }

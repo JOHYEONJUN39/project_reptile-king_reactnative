@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 import type { ProductProps } from '../types/ProductType'
 import productList from '../assets/ProductData.json'
 import MovingLine from '../components/animation/MovingLine'
+import getDeliveryDay from '../hooks/getDeliveryDay'
 
 const ProductDetails = (): JSX.Element => {
   const screenWidth = useWindowDimensions().width
@@ -78,7 +79,7 @@ const ProductDetails = (): JSX.Element => {
           </View>
           <View style={styles.eta}>
             <MaterialIcons name='delivery-dining' size={24} color='#fff' style={{ marginRight: 5 }} />
-            <Text style={styles.text}>월/일(요일) 도착 예정</Text>
+            <Text style={styles.text}>{getDeliveryDay()}(요일) 도착 예정</Text>
           </View>
         </View>
         <View style={styles.footerContainer}>
@@ -86,16 +87,22 @@ const ProductDetails = (): JSX.Element => {
             <Button
               title="상품정보"
               onPress={() => { setActiveTab('상품정보') }}
+              color={activeTab === '상품정보' ? '#FF80DB' : '#fff'}
             />
             <Button
               title="리뷰"
               onPress={() => { setActiveTab('리뷰') }}
+              color={activeTab === '상품정보' ? '#fff' : '#FF80DB'}
             />
           </View>
           <MovingLine activeTab={activeTab} tabData={tabData}/>
           {activeTab === '상품정보'
             ? (
-              <Text>상품정보</Text>
+              <View style={{ width: '100%' }}>
+                {product?.contentImage?.map((image, index) => (
+                  <Image key={index} source={{ uri: image }} style={{ width: screenWidth, height: 300 }}/>
+                ))}
+              </View>
               )
             : (
               <Text>리뷰</Text>
@@ -114,8 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   inner: {
-    paddingVertical: 24,
-    alignItems: 'center'
+    paddingVertical: 24
   },
   detail: {
     width: '100%',
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     width: '100%',
-    height: 300
+    height: 'auto'
   },
   menu: {
     width: '100%',

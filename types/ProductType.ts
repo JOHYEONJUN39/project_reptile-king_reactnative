@@ -7,22 +7,24 @@ export interface ProductList {
   product: {
     name: string
     image: string
-    price: string
+    price: number
     rating: number
     review: number
     charge: number
     code: string
     seller: string
+    contentImage?: string[]
   }
 }
 
 export interface ProductProps {
   name: string
   image: string
-  price: string
+  price: number
   rating: number
   review: number
   charge: number
   code: string
   seller: string
+  contentImage?: string[]
 }

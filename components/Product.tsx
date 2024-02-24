@@ -51,7 +51,7 @@ const Product = ({ product }: ProductList): JSX.Element => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.name} numberOfLines={2}>{name}</Text>
-        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.price}>{`${price.toLocaleString()}원`}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Rating rating={rating} />
           <Text style={{ color: '#fff' }}>({review})</Text>

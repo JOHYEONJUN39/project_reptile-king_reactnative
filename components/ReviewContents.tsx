@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Rating from '../components/Rating'
 import Line from '../components/Line'
 import type { ProductProps } from '../types/ProductType'
 import ProgressBar from '../components/ProgressBar'
 import Review from './Review'
+import { useState } from 'react'
 
-interface ReviewContentsProps {
+interface ReviewContentProps {
   reviewData: ProductProps | null
 }
 
-const ReviewContents = ({ reviewData }: ReviewContentsProps): JSX.Element => {
+const ReviewContents = ({ reviewData }: ReviewContentProps): JSX.Element => {
   if (reviewData === null) {
     return <View><Text>리뷰 데이터가 없습니다.</Text></View>
   }
@@ -18,6 +19,7 @@ const ReviewContents = ({ reviewData }: ReviewContentsProps): JSX.Element => {
   for (const score in reviewsByScore) {
     percentageByScore[score] = reviewsByScore[score] / totalReview
   }
+  const [pageCount, setPageCount] = useState(10)
   return (
     <View style={styles.container} >
       <View style={styles.numOfReviewContainer}>
@@ -37,9 +39,17 @@ const ReviewContents = ({ reviewData }: ReviewContentsProps): JSX.Element => {
         </View>
       </View>
       <Line color='#39823E' weight={2} mV={20}/>
-      {reviewData.review.map((review, index) => (
+      {reviewData.review.slice(0, pageCount).map((review, index) => (
         <Review key={index} review={review} />
       ))}
+      {reviewData.review.length > pageCount &&
+        <TouchableOpacity
+          onPress={() => { setPageCount(prev => prev + 10) }}
+          style={styles.moreReviewButton}
+        >
+          <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>리뷰 더 보기</Text>
+        </TouchableOpacity>
+      }
     </View>
   )
 }
@@ -84,6 +94,14 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     width: '50%',
     justifyContent: 'center'
+  },
+  moreReviewButton: {
+    width: '100%',
+    height: 40,
+    backgroundColor: '#467FD3',
+    borderRadius: 5,
+    justifyContent: 'center',
+    marginVertical: 10
   }
 })
 

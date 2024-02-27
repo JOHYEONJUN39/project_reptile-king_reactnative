@@ -4,14 +4,15 @@ interface LineProps {
   color?: string
   weight?: number
   mV?: number
+  direction?: 'row' | 'column'
 }
 
-const Line = ({ color, weight, mV }: LineProps): JSX.Element => {
+const Line = ({ color, weight, mV, direction }: LineProps): JSX.Element => {
   const styles = StyleSheet.create({
     line: {
-      height: weight,
+      width: direction === 'row' ? weight : '100%',
+      height: direction === 'row' ? '100%' : weight,
       backgroundColor: color,
-      width: '100%',
       marginVertical: mV
     }
   })

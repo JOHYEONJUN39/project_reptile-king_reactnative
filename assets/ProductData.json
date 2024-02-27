@@ -4,7 +4,7 @@
     "image": "https://i.postimg.cc/sx1jSsX7/image.jpg",
     "price": 35000,
     "rating": 5,
-    "review": 120,
+    "totalReview": 120,
     "charge": 0,
     "code": "001",
     "seller": "파충의 마술사",
@@ -21,6 +21,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -28,7 +61,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1622996903146_1000.jpeg",
     "price": 37000,
     "rating": 3.7,
-    "review": 98,
+    "totalReview": 98,
     "charge": 0,
     "code": "002",
     "seller": "유재경의 파충류",
@@ -45,6 +78,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 90,
+      "4": 10,
+      "3": 0,
+      "2": 0,
+      "1": 0
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/mk5Dq1PR/image.png",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/mk5Dq1PR/image.png",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/mk5Dq1PR/image.png",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -52,7 +118,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1628667429087_1000.jpg",
     "price": 33000,
     "rating": 4.2,
-    "review": 150,
+    "totalReview": 150,
     "charge": 0,
     "code": "003",
     "seller": "파충상회",
@@ -69,6 +135,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -76,7 +175,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1648530281085_1000.png",
     "price": 36000,
     "rating": 4.8,
-    "review": 110,
+    "totalReview": 110,
     "charge": 2000,
     "code": "004",
     "seller": "파충류의 정석",
@@ -93,6 +192,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -100,7 +232,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1632978170013_1000.png",
     "price": 34000,
     "rating": 2.3,
-    "review": 105,
+    "totalReview": 105,
     "charge": 0,
     "code": "005",
     "seller": "파충마을",
@@ -117,6 +249,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -124,7 +289,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1522164855585_1000.jpg",
     "price": 35000,
     "rating": 4.6,
-    "review": 125,
+    "totalReview": 125,
     "charge": 3000,
     "code": "006",
     "seller": "파충왕국",
@@ -141,6 +306,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -148,7 +346,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1522165573867_1000.jpg",
     "price": 32000,
     "rating": 4.4,
-    "review": 130,
+    "totalReview": 130,
     "charge": 0,
     "code": "007",
     "seller": "파충마니아",
@@ -165,6 +363,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -172,7 +403,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1570615293217_1000.jpg",
     "price": 35500,
     "rating": 3.7,
-    "review": 115,
+    "totalReview": 115,
     "charge": 2000,
     "code": "008",
     "seller": "파충가이드",
@@ -189,6 +420,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   },
   {
@@ -196,7 +460,7 @@
     "image": "https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1620533018041_1000.jpg",
     "price": 34500,
     "rating": 4.5,
-    "review": 120,
+    "totalReview": 120,
     "charge": 0,
     "code": "009",
     "seller": "파충탐험대",
@@ -213,6 +477,39 @@
       "https://i.postimg.cc/PJNkzW1V/10.jpg",
       "https://i.postimg.cc/DzFkYkqX/11.jpg",
       "https://i.postimg.cc/FFnvF6QM/12.png"
+    ],
+    "reviewsByScore": {
+      "5": 60,
+      "4": 25,
+      "3": 10,
+      "2": 4,
+      "1": 1
+    },
+    "review": [
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육장이 있으면 더 편하게 키울 수 있을 것 같아요. 강추합니다."
+      },
+      {
+        "profileImage": "https://i.postimg.cc/3wzv3v3t/1.jpg",
+        "nickname": "파충의 마술사",
+        "rating": 5,
+        "date": "2022-03-01",
+        "productImage": "https://i.postimg.cc/sx1jSsX7/image.jpg",
+        "content": "이탈리아 베네치아에서 만든 사육장이라는데, 정말 퀄리티가 좋아요. 파충류를 키우는데 이 사육"
+      }
     ]
   }
 ]

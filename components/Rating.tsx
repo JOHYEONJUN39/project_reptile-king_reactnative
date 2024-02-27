@@ -3,9 +3,10 @@ import { Octicons } from '@expo/vector-icons'
 
 interface RatingProps {
   rating: number
+  size?: number
 };
 
-const Rating = ({ rating }: RatingProps): JSX.Element => {
+const Rating = ({ rating, size }: RatingProps): JSX.Element => {
   const filledStars = Math.floor(rating)
   const emptyStars = Array(5 - filledStars).fill('star')
   const starArray = [...Array(filledStars).fill('star-fill'), ...emptyStars]
@@ -13,7 +14,7 @@ const Rating = ({ rating }: RatingProps): JSX.Element => {
   return (
     <View style={styles.rating}>
       {starArray.map((type, index) => {
-        return <Octicons key={index} name={type} size={16} color={type === 'star-fill' ? '#FF80DB' : '#fff'}/>
+        return <Octicons key={index} name={type} size={size} color={type === 'star-fill' ? '#FF80DB' : '#fff'}/>
       })}
     </View>
   )

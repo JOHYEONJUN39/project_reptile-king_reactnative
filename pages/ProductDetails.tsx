@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Button } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Button, TouchableOpacity, RefreshControl } from 'react-native'
 import type { ImageLoadEventData, NativeSyntheticEvent } from 'react-native'
 import type { ProductRouteProp } from '../types/RootStackParamList'
 import { useRoute } from '@react-navigation/native'
@@ -23,6 +23,8 @@ const ProductDetails = (): JSX.Element => {
   const { productCode } = route.params
   const [product, setProduct] = useState<ProductProps | null>(null)
   const [activeTab, setActiveTab] = useState('상품정보')
+  const [quantity, setQuantity] = useState(1)
+  const [refreshing, setRefreshing] = useState(false)
   const tabData = [
     {
       name: '상품정보',
@@ -43,7 +45,13 @@ const ProductDetails = (): JSX.Element => {
     }
   }, [productCode])
 
-  // API로 변경시 사용
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true)
+    // 데이터호출 API 추가시 사용
+    setTimeout(() => { setRefreshing(false) }, 2000)
+  }, [])
+
+  // 데이터호출 API 추가시 사용
   // useEffect(() => {
   //   const fetchProductData = async (): Promise<void> => {
   //     try {
@@ -74,6 +82,16 @@ const ProductDetails = (): JSX.Element => {
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.inner}
+        stickyHeaderIndices={[4]}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor='#fff'
+            title='당겨서 새로고침!'
+            titleColor='#fff'
+          />
+        }
       >
         <Image source={{ uri: product?.image }} style={{ width: screenWidth, height: screenWidth }}/>
         <View style={styles.detail}>
@@ -102,7 +120,7 @@ const ProductDetails = (): JSX.Element => {
             <Text style={styles.text}>{getDeliveryDay()}(요일) 도착 예정</Text>
           </View>
         </View>
-        <View style={styles.footerContainer}>
+        <View style={{ backgroundColor: '#072E0A' }}>
           <View style={styles.menu}>
             <Button
               title="상품정보"
@@ -116,9 +134,11 @@ const ProductDetails = (): JSX.Element => {
             />
           </View>
           <MovingLine activeTab={activeTab} tabData={tabData}/>
+          <Line color='#39823E' weight={2} />
+        </View>
           {activeTab === '상품정보'
             ? (
-              <View style={{ width: '100%' }}>
+              <View style={{ width: '100%', paddingVertical: 10 }}>
                 {product?.contentImage?.map((image, index) => (
                   <Image
                     key={index}
@@ -133,8 +153,31 @@ const ProductDetails = (): JSX.Element => {
                 <ReviewContents reviewData={product} />
               )
           }
-        </View>
       </ScrollView>
+      <View style={styles.bottomBar}>
+        <View style={styles.quantitySelector}>
+          <TouchableOpacity
+            onPress={() => { setQuantity(Math.max(1, quantity - 1)) }}
+          >
+            <MaterialIcons name='remove' size={24} color='#fff'/>
+          </TouchableOpacity>
+          <Text style={styles.text}>{quantity}</Text>
+          <TouchableOpacity
+            onPress={() => { setQuantity(quantity + 1) }}
+          >
+            <MaterialIcons name='add' size={24} color='#fff' />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.price}>
+          <Text style={styles.text}>{(quantity * (product?.price ?? 0)).toLocaleString()}원</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={() => { console.log('구매하기') }}
+        >
+          <Text style={styles.name}>구매하기</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -187,16 +230,41 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5
   },
-  footerContainer: {
-    width: '100%',
-    height: 'auto'
-  },
   menu: {
     width: '100%',
     height: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  bottomBar: {
+    height: 90,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 30,
+    paddingHorizontal: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#A32273',
+    backgroundColor: '#39823E'
+  },
+  quantitySelector: {
+    width: '25%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  price: {
+    width: '25%',
+    alignItems: 'center'
+  },
+  buyButton: {
+    width: '50%',
+    height: '100%',
+    borderRadius: 10,
+    backgroundColor: '#A32273',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

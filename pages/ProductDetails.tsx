@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Button } from 'react-native'
+import type { ImageLoadEventData, NativeSyntheticEvent } from 'react-native'
 import type { ProductRouteProp } from '../types/RootStackParamList'
 import { useRoute } from '@react-navigation/native'
 import Rating from '../components/Rating'
@@ -9,6 +10,12 @@ import type { ProductProps } from '../types/ProductType'
 import productList from '../assets/ProductData.json'
 import MovingLine from '../components/animation/MovingLine'
 import getDeliveryDay from '../hooks/getDeliveryDay'
+import ReviewContents from '../components/ReviewContents'
+
+interface ImageDimension {
+  width: number
+  height: number
+}
 
 const ProductDetails = (): JSX.Element => {
   const screenWidth = useWindowDimensions().width
@@ -35,6 +42,7 @@ const ProductDetails = (): JSX.Element => {
       console.error('Product not found')
     }
   }, [productCode])
+
   // API로 변경시 사용
   // useEffect(() => {
   //   const fetchProductData = async (): Promise<void> => {
@@ -52,26 +60,38 @@ const ProductDetails = (): JSX.Element => {
   //   }
   //   void fetchProductData()
   // }, [productCode])
+  const [imageHeights, setImageHeights] = useState<number[]>([])
+  const onImageLoad = (event: NativeSyntheticEvent<ImageLoadEventData>, index: number): void => {
+    const { width, height } = (event.nativeEvent.source as unknown) as ImageDimension
+    const imageHeight = height * (screenWidth / width)
+    setImageHeights(prev => {
+      const newHeights = [...prev]
+      newHeights[index] = imageHeight
+      return newHeights
+    })
+  }
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.inner}>
+      <ScrollView
+        contentContainerStyle={styles.inner}
+      >
         <Image source={{ uri: product?.image }} style={{ width: screenWidth, height: screenWidth }}/>
         <View style={styles.detail}>
           <Text style={styles.text}>{product?.seller}</Text>
           <Text style={styles.name}>{product?.name}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Rating rating={4} />
-            <Text style={{ color: '#fff' }}>{product?.review}</Text>
+            <Text style={[styles.text, { marginLeft: 5 }]}>{product?.totalReview}</Text>
           </View>
           <Text style={styles.name}>{product?.price.toLocaleString()}원</Text>
         </View>
         <Line color='#39823E' weight={2} mV={2} />
         <View style={styles.delivery}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+          <View style={styles.deliveryInfo}>
             <Text style={styles.text}>혜택</Text>
             <Text style={[styles.text, { marginLeft: 5 }]}>{`${Math.round(Number(product?.price) * 0.001)}P 지급`}</Text>
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+          <View style={styles.deliveryInfo}>
             <Text style={styles.text}>배송</Text>
             <Text style={[styles.text, { marginLeft: 5 }]}>
               {product?.charge === 0 ? '무료배송 / 일반택배' : `${product?.charge}원 / 일반택배`}
@@ -100,12 +120,17 @@ const ProductDetails = (): JSX.Element => {
             ? (
               <View style={{ width: '100%' }}>
                 {product?.contentImage?.map((image, index) => (
-                  <Image key={index} source={{ uri: image }} style={{ width: screenWidth, height: 300 }}/>
+                  <Image
+                    key={index}
+                    source={{ uri: image }}
+                    style={{ width: screenWidth, height: imageHeights[index] ?? screenWidth }}
+                    onLoad={(event) => { onImageLoad(event, index) }}
+                  />
                 ))}
               </View>
               )
             : (
-              <Text>리뷰</Text>
+                <ReviewContents reviewData={product} />
               )
           }
         </View>
@@ -146,6 +171,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     justifyContent: 'space-between'
+  },
+  deliveryInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5
   },
   eta: {
     width: '100%',

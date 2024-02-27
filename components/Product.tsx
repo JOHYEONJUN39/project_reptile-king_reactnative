@@ -5,7 +5,7 @@ import type { ProductNavigationProp } from '../types/RootStackParamList'
 import type { ProductList } from '../types/ProductType'
 
 const Product = ({ product }: ProductList): JSX.Element => {
-  const { name, image, price, rating, review, charge, code } = product
+  const { name, image, price, rating, totalReview, charge, code } = product
   const navigation = useNavigation<ProductNavigationProp>()
   const styles = StyleSheet.create({
     productBox: {
@@ -54,7 +54,7 @@ const Product = ({ product }: ProductList): JSX.Element => {
         <Text style={styles.price}>{`${price.toLocaleString()}원`}</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Rating rating={rating} />
-          <Text style={{ color: '#fff' }}>({review})</Text>
+          <Text style={{ color: '#fff' }}>({totalReview})</Text>
         </View>
         <Text style={{ color: '#fff', marginTop: 2 }}>{charge === 0 ? '무료배송' : `${charge}원`}</Text>
       </View>

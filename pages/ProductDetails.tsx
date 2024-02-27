@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Button,
 import type { ImageLoadEventData, NativeSyntheticEvent } from 'react-native'
 import type { ProductRouteProp } from '../types/RootStackParamList'
 import { useRoute } from '@react-navigation/native'
-import Rating from '../components/Rating'
-import Line from '../components/Line'
+import Rating from '../components/common/Rating'
+import Line from '../components/common/Line'
 import { MaterialIcons } from '@expo/vector-icons'
 import type { ProductProps } from '../types/ProductType'
 import productList from '../assets/ProductData.json'
 import MovingLine from '../components/animation/MovingLine'
 import getDeliveryDay from '../hooks/getDeliveryDay'
-import ReviewContents from '../components/ReviewContents'
+import ReviewContents from '../components/market/ReviewContents'
 
 interface ImageDimension {
   width: number

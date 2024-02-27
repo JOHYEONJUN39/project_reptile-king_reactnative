@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import type { CategoryList } from '../types/ProductType'
+import type { CategoryList } from '../../types/ProductType'
 import { useNavigation } from '@react-navigation/native'
-import type { ProductNavigationProp } from '../types/RootStackParamList'
+import type { ProductNavigationProp } from '../../types/RootStackParamList'
 
 const Category = ({ image, name }: CategoryList): JSX.Element => {
   const navigation = useNavigation<ProductNavigationProp>()

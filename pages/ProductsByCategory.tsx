@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import type { ProductRouteProp } from '../types/RootStackParamList'
-import Product from '../components/Product'
+import Product from '../components/market/Product'
 import productData from '../assets/ProductData.json'
 
 const ProductsByCategory = (): JSX.Element => {

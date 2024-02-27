@@ -1,6 +1,6 @@
 import { Text, TextInput, StyleSheet } from 'react-native'
 import { useController } from 'react-hook-form'
-import type { AuthInput } from '../types/Auth'
+import type { AuthInput } from '../../types/Auth'
 
 const Input = ({ name, control, rules, placeholder }: AuthInput): JSX.Element => {
   const { field, fieldState: { error } } = useController({

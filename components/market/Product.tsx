@@ -1,8 +1,8 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import Rating from './Rating'
+import Rating from '../common/Rating'
 import { useNavigation } from '@react-navigation/native'
-import type { ProductNavigationProp } from '../types/RootStackParamList'
-import type { ProductList } from '../types/ProductType'
+import type { ProductNavigationProp } from '../../types/RootStackParamList'
+import type { ProductList } from '../../types/ProductType'
 
 const Product = ({ product }: ProductList): JSX.Element => {
   const { name, image, price, rating, totalReview, charge, code } = product

@@ -12,7 +12,7 @@ const Review = ({ review }: ReviewProps): JSX.Element => {
   return (
     <View style={styles.reviewContainer}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <Image source={{ uri: profileImage }} style={styles.profileImage} />
+        <Image source={{ uri: 'https://i.postimg.cc/qRpzCTff/image.webp' ?? profileImage }} style={styles.profileImage} />
         <View>
           <Text style={styles.nickname}>{nickname}</Text>
           <View style={{ flexDirection: 'row' }}>

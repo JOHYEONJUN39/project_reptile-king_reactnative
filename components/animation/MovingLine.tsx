@@ -34,7 +34,7 @@ const MovingLine = (activeProps: MovingLineProps): JSX.Element => {
     <Animated.View
       style={{
         width: screenWidth * 0.3,
-        height: 2,
+        height: 3,
         backgroundColor: '#A32273',
         transform: [{ translateX: linePosition }]
       }}

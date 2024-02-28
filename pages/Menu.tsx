@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, Text } from 'react-native'
-import Category from '../components/Category'
+import Category from '../components/market/Category'
 import type { CategoryList } from '../types/ProductType'
 import shoppingData from '../assets/shoppingData.json'
 import breedData from '../assets/breedData.json'

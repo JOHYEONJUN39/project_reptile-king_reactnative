@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import SubmitButton from '../components/SubmitButton'
+import SubmitButton from '../components/common/SubmitButton'
 import { useForm } from 'react-hook-form'
-import Input from '../components/Input'
-import Grass from '../components/Grass'
+import Input from '../components/common/Input'
+import Grass from '../components/common/Grass'
 
 const SignUp = (): JSX.Element => {
   const { control, handleSubmit, watch } = useForm()

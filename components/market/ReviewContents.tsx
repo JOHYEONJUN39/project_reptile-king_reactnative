@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import Rating from '../components/Rating'
-import Line from '../components/Line'
-import type { ProductProps } from '../types/ProductType'
-import ProgressBar from '../components/ProgressBar'
+import Rating from '../common/Rating'
+import Line from '../common/Line'
+import type { ProductProps } from '../../types/ProductType'
+import ProgressBar from '../common/ProgressBar'
 import Review from './Review'
 import { useState } from 'react'
 

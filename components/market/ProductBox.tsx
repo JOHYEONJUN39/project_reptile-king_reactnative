@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
-import type { ProductList } from '../types/ProductType'
+import type { ProductList } from '../../types/ProductType'
 import { useNavigation } from '@react-navigation/native'
-import type { ProductNavigationProp } from '../types/RootStackParamList'
+import type { ProductNavigationProp } from '../../types/RootStackParamList'
 
 const ProductBox = ({ product }: ProductList): JSX.Element => {
   const { name, image, price, code } = product

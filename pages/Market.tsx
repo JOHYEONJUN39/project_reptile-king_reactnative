@@ -1,9 +1,9 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text, useWindowDimensions, Image } from 'react-native'
 import type { CategoryList } from '../types/ProductType'
-import Category from '../components/Category'
+import Category from '../components/market/Category'
 import shoppingData from '../assets/shoppingData.json'
-import Line from '../components/Line'
-import ProductBox from '../components/ProductBox'
+import Line from '../components/common/Line'
+import ProductBox from '../components/market/ProductBox'
 import productData from '../assets/ProductData.json'
 
 const Market = (): JSX.Element => {

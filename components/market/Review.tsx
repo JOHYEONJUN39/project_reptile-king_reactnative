@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
-import Rating from './Rating'
-import type { ReviewData } from '../types/ProductType'
+import Rating from '../common/Rating'
+import type { ReviewData } from '../../types/ProductType'
 
 interface ReviewProps {
   review: ReviewData

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Button, TouchableOpacity, RefreshControl } from 'react-native'
-import type { ImageLoadEventData, NativeSyntheticEvent } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, TouchableOpacity, RefreshControl } from 'react-native'
 import type { ProductRouteProp } from '../types/RootStackParamList'
 import { useRoute } from '@react-navigation/native'
 import Rating from '../components/common/Rating'
@@ -10,12 +9,9 @@ import type { ProductProps } from '../types/ProductType'
 import productList from '../assets/ProductData.json'
 import MovingLine from '../components/animation/MovingLine'
 import getDeliveryDay from '../hooks/getDeliveryDay'
+import ImageScroll from '../components/market/ImageScroll'
 import ReviewContents from '../components/market/ReviewContents'
-
-interface ImageDimension {
-  width: number
-  height: number
-}
+import ProductFooter from '../components/footer/ProductFooter'
 
 const ProductDetails = (): JSX.Element => {
   const screenWidth = useWindowDimensions().width
@@ -23,16 +19,15 @@ const ProductDetails = (): JSX.Element => {
   const { productCode } = route.params
   const [product, setProduct] = useState<ProductProps | null>(null)
   const [activeTab, setActiveTab] = useState('상품정보')
-  const [quantity, setQuantity] = useState(1)
   const [refreshing, setRefreshing] = useState(false)
   const tabData = [
     {
       name: '상품정보',
-      position: 15
+      position: 13
     },
     {
       name: '리뷰',
-      position: 77
+      position: 75
     }
   ]
 
@@ -68,16 +63,7 @@ const ProductDetails = (): JSX.Element => {
   //   }
   //   void fetchProductData()
   // }, [productCode])
-  const [imageHeights, setImageHeights] = useState<number[]>([])
-  const onImageLoad = (event: NativeSyntheticEvent<ImageLoadEventData>, index: number): void => {
-    const { width, height } = (event.nativeEvent.source as unknown) as ImageDimension
-    const imageHeight = height * (screenWidth / width)
-    setImageHeights(prev => {
-      const newHeights = [...prev]
-      newHeights[index] = imageHeight
-      return newHeights
-    })
-  }
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -122,62 +108,22 @@ const ProductDetails = (): JSX.Element => {
         </View>
         <View style={{ backgroundColor: '#072E0A' }}>
           <View style={styles.menu}>
-            <Button
-              title="상품정보"
-              onPress={() => { setActiveTab('상품정보') }}
-              color={activeTab === '상품정보' ? '#FF80DB' : '#fff'}
-            />
-            <Button
-              title="리뷰"
-              onPress={() => { setActiveTab('리뷰') }}
-              color={activeTab === '상품정보' ? '#fff' : '#FF80DB'}
-            />
+            <TouchableOpacity onPress={() => { setActiveTab('상품정보') }} style={styles.menuTap}>
+              <Text style={[styles.text, { color: activeTab === '상품정보' ? '#FF80DB' : '#fff' }]}>상품정보</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setActiveTab('리뷰') }} style={styles.menuTap}>
+              <Text style={[styles.text, { color: activeTab === '리뷰' ? '#FF80DB' : '#fff' }]}>리뷰</Text>
+            </TouchableOpacity>
           </View>
           <MovingLine activeTab={activeTab} tabData={tabData}/>
           <Line color='#39823E' weight={2} />
         </View>
           {activeTab === '상품정보'
-            ? (
-              <View style={{ width: '100%', paddingVertical: 10 }}>
-                {product?.contentImage?.map((image, index) => (
-                  <Image
-                    key={index}
-                    source={{ uri: image }}
-                    style={{ width: screenWidth, height: imageHeights[index] ?? screenWidth }}
-                    onLoad={(event) => { onImageLoad(event, index) }}
-                  />
-                ))}
-              </View>
-              )
-            : (
-                <ReviewContents reviewData={product} />
-              )
+            ? (<ImageScroll contentImages={product?.contentImage ?? []} />)
+            : (<ReviewContents reviewData={product} />)
           }
       </ScrollView>
-      <View style={styles.bottomBar}>
-        <View style={styles.quantitySelector}>
-          <TouchableOpacity
-            onPress={() => { setQuantity(Math.max(1, quantity - 1)) }}
-          >
-            <MaterialIcons name='remove' size={24} color='#fff'/>
-          </TouchableOpacity>
-          <Text style={styles.text}>{quantity}</Text>
-          <TouchableOpacity
-            onPress={() => { setQuantity(quantity + 1) }}
-          >
-            <MaterialIcons name='add' size={24} color='#fff' />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.price}>
-          <Text style={styles.text}>{(quantity * (product?.price ?? 0)).toLocaleString()}원</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.buyButton}
-          onPress={() => { console.log('구매하기') }}
-        >
-          <Text style={styles.name}>구매하기</Text>
-        </TouchableOpacity>
-      </View>
+      <ProductFooter price={product?.price ?? 0} />
     </View>
   )
 }
@@ -237,32 +183,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  bottomBar: {
-    height: 90,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 30,
-    paddingHorizontal: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#A32273',
-    backgroundColor: '#39823E'
-  },
-  quantitySelector: {
-    width: '25%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  price: {
-    width: '25%',
-    alignItems: 'center'
-  },
-  buyButton: {
+  menuTap: {
     width: '50%',
     height: '100%',
-    borderRadius: 10,
-    backgroundColor: '#A32273',
     alignItems: 'center',
     justifyContent: 'center'
   }

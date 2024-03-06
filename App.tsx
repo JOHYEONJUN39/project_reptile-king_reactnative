@@ -11,71 +11,74 @@ import Cart from './pages/Cart'
 import ProductsByCategory from './pages/ProductsByCategory'
 import ProductDetails from './pages/ProductDetails'
 import BackCommonHeader from './components/header/BackCommonHeader'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 const Stack = createNativeStackNavigator()
 
 const App = (): JSX.Element => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Market"
-          component={Market}
-          options={{
-            header: () => <MarketHeader />
-          }}
-        />
-        <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              header: () => <CommonHeader title='로그인'/> // BackHeader 컴포넌트 직접 사용
-            }}
-          />
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
           <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{
-              header: () => <BackCommonHeader title='회원가입'/>
-            }}
-          />
-          <Stack.Screen
-            name="Menu"
-            component={Menu}
-            options={{
-              header: () => <BackCommonHeader title='메뉴'/>
-            }}
-          />
-          <Stack.Screen
-            name="Notify"
-            component={Notify}
-            options={{
-              header: () => <CommonHeader title='알림'/>
-            }}
-          />
-          <Stack.Screen
-            name="Cart"
-            component={Cart}
-            options={{
-              header: () => <BackCommonHeader title='장바구니'/>
-            }}
-          />
-          <Stack.Screen
-            name="ProductsByCategory"
-            component={ProductsByCategory}
+            name="Market"
+            component={Market}
             options={{
               header: () => <MarketHeader />
             }}
           />
           <Stack.Screen
-            name="Product"
-            component={ProductDetails}
-            options={{
-              header: () => <MarketHeader />
-            }}
-          />
-      </Stack.Navigator>
-    </NavigationContainer>
+              name="Login"
+              component={Login}
+              options={{
+                header: () => <CommonHeader title='로그인'/> // BackHeader 컴포넌트 직접 사용
+              }}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{
+                header: () => <BackCommonHeader title='회원가입'/>
+              }}
+            />
+            <Stack.Screen
+              name="Menu"
+              component={Menu}
+              options={{
+                header: () => <BackCommonHeader title='메뉴'/>
+              }}
+            />
+            <Stack.Screen
+              name="Notify"
+              component={Notify}
+              options={{
+                header: () => <CommonHeader title='알림'/>
+              }}
+            />
+            <Stack.Screen
+              name="Cart"
+              component={Cart}
+              options={{
+                header: () => <BackCommonHeader title='장바구니'/>
+              }}
+            />
+            <Stack.Screen
+              name="ProductsByCategory"
+              component={ProductsByCategory}
+              options={{
+                header: () => <MarketHeader />
+              }}
+            />
+            <Stack.Screen
+              name="Product"
+              component={ProductDetails}
+              options={{
+                header: () => <MarketHeader />
+              }}
+            />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   )
 }
 

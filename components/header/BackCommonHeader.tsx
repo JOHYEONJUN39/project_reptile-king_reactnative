@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
@@ -14,10 +14,10 @@ const BackCommonHeader = ({ title }: BackHeaderProps): JSX.Element => {
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
-        <View style={styles.iconContainer}>
-          <MaterialIcons name='arrow-back-ios-new' size={24} color='white' onPress={goBack} />
+        <TouchableOpacity style={styles.iconContainer} onPress={goBack}>
+          <MaterialIcons name='arrow-back-ios-new' size={24} color='white' />
           <Text style={styles.back}>Back</Text>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>{title}</Text>
       </View>
     </View>

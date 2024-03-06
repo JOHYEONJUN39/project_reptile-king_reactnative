@@ -131,8 +131,7 @@ const ProductDetails = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#072E0A',
-    justifyContent: 'space-between'
+    backgroundColor: '#072E0A'
   },
   inner: {
     paddingVertical: 24

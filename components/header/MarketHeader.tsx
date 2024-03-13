@@ -51,7 +51,7 @@ const MarketHeader = (): JSX.Element => {
         <View style={styles.leftIcon}>
           <Feather name="menu" size={36} color="white" onPress={() => { navigation.navigate('Menu' as never) }}/>
         </View>
-        <TouchableOpacity style={styles.searchBox}>
+        <TouchableOpacity style={styles.searchBox} onPress={() => { navigation.navigate('Search' as never) }}>
           <Feather name="search" size={20} color="#888" style={styles.searchIcon} />
           <Text style={styles.placeholder}>검색어를 입력해주세요.</Text>
         </TouchableOpacity>

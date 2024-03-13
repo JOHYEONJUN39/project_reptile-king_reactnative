@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import QuantitySelector from '../common/QuantitySelector'
+import { useNavigation } from '@react-navigation/native'
 
 interface ProductProps {
   price: number
 }
 
 const ProductFooter = ({ price }: ProductProps): JSX.Element => {
+  const navigation = useNavigation()
   const [quantity, setQuantity] = useState(1)
   return (
     <View style={styles.bottomBar}>
@@ -14,7 +16,7 @@ const ProductFooter = ({ price }: ProductProps): JSX.Element => {
       <View style={styles.price}>
         <Text style={styles.text}>{(quantity * (price ?? 0)).toLocaleString()}원</Text>
       </View>
-      <TouchableOpacity style={styles.buyButton} onPress={() => { console.log('구매하기') }}>
+      <TouchableOpacity style={styles.buyButton} onPress={() => { navigation.navigate('Payment' as never) }}>
         <Text style={styles.name}>구매하기</Text>
       </TouchableOpacity>
     </View>

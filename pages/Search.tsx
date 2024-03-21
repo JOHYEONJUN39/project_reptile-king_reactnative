@@ -70,7 +70,7 @@ const Search = (): JSX.Element => {
       <FlatList
         data={results}
         keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
-        renderItem={({ item }) => <Result text={item.name} searchQuery={searchQuery} />}
+        renderItem={({ item }) => <Result text={item.name} searchQuery={searchQuery} code={item.code}/>}
         style={{ width: '100%' }}
       />
       </View>

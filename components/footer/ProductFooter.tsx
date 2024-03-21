@@ -25,14 +25,13 @@ const ProductFooter = ({ price }: ProductProps): JSX.Element => {
 
 const styles = StyleSheet.create({
   bottomBar: {
-    height: 90,
+    height: 70,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 30,
+    paddingTop: 20,
+    paddingBottom: 20,
     paddingHorizontal: 10,
     borderTopWidth: 1,
-    borderTopColor: '#A32273',
     backgroundColor: '#39823E'
   },
   price: {
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
   },
   buyButton: {
     width: '50%',
-    height: '100%',
+    height: 40,
     borderRadius: 10,
     backgroundColor: '#A32273',
     alignItems: 'center',

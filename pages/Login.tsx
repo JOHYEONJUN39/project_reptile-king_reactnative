@@ -4,14 +4,22 @@ import { useForm } from 'react-hook-form'
 import SubmitButton from '../components/common/SubmitButton'
 import Input from '../components/common/Input'
 import Grass from '../components/common/Grass'
+import axios from 'axios'
 
 const Login = (): JSX.Element => {
   const { control, handleSubmit } = useForm()
 
   const navigation = useNavigation()
 
-  const onsubmit = (): void => {
-    navigation.navigate('Market' as never) // 'Back' 페이지로 이동
+  const onsubmit = async (data: any): Promise<void> => {
+    try {
+      console.log('data:', data)
+      const response = await axios.post('http://172.21.4.11:8000/api/login', data)
+      console.log('response:', response)
+      navigation.navigate('Market' as never)
+    } catch (error) {
+      console.error('회원가입:', error)
+    }
   }
 
   return (
@@ -19,13 +27,15 @@ const Login = (): JSX.Element => {
       <View style={styles.inner}>
         <Text style={styles.filed}>로그인</Text>
         <Input
-          name='id'
+          name='email'
           control={control}
-          placeholder='아이디를 입력해주세요.'
+          placeholder='이메일을 입력해주세요.'
           rules={{
-            required: '아이디는 필수 입력항목입니다.',
-            minLength: { value: 8, message: '아이디는 최소 8글자여야 합니다.' },
-            maxLength: { value: 20, message: '아이디는 최대 20글자까지 입력 가능합니다.' }
+            required: '이메일을 입력해주세요.',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: '이메일 형식에 맞게 입력해주세요.'
+            }
           }}
         />
         <Text style={styles.filed}>비밀번호</Text>
@@ -36,10 +46,10 @@ const Login = (): JSX.Element => {
           rules={{
             required: '비밀번호를 입력해주세요.',
             minLength: { value: 8, message: '비밀번호는 최소 8글자여야 합니다.' },
-            maxLength: { value: 20, message: '비밀번호는 최대 20글자까지 입력 가능합니다.' },
+            maxLength: { value: 16, message: '비밀번호는 최대 16글자까지 입력 가능합니다.' },
             pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-              message: '비밀번호는 영문과 숫자를 포함하여 8~20자로 입력해주세요.'
+              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@*&\-_]{8,16}$/,
+              message: '비밀번호는 8~16자의 영어 대, 소문자, 숫자, !@*&-_만 입력 가능합니다.'
             }
           }}
         />

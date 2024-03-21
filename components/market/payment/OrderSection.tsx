@@ -1,8 +1,9 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable, LayoutAnimation } from 'react-native'
 import { Input } from 'react-native-elements'
 import RNPickerSelect from 'react-native-picker-select'
+import RotateArrow from '../../animation/RotateArrow'
 
 const OrderSection = (): JSX.Element => {
   const [name, setName] = useState('')
@@ -11,14 +12,15 @@ const OrderSection = (): JSX.Element => {
   const [number, setNumber] = useState('')
   const [isOrdererOpen, setIsOrdererOpen] = useState(true)
   const toggleOrdererSection = (): void => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setIsOrdererOpen(!isOrdererOpen)
   }
   return (
     <View style={styles.ordererContainer}>
-      <TouchableOpacity style={[styles.row, { marginBottom: isOrdererOpen ? 24 : 0 }]} onPress={toggleOrdererSection}>
+      <Pressable style={[styles.row, { marginBottom: isOrdererOpen ? 24 : 0 }]} onPress={toggleOrdererSection}>
         <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>주문자</Text>
-        <MaterialIcons name="keyboard-arrow-right" size={30} color="#fff" />
-      </TouchableOpacity>
+        <RotateArrow state={isOrdererOpen} />
+      </Pressable>
       {isOrdererOpen && (
         <>
           <View style={styles.row}>
@@ -59,7 +61,11 @@ const OrderSection = (): JSX.Element => {
                 ]}
                 style={{
                   inputIOS: { color: '#fff', fontSize: 16 },
-                  inputAndroid: { color: '#fff', fontSize: 16 }
+                  inputAndroid: { color: '#fff', fontSize: 16 },
+                  iconContainer: {
+                    top: -2,
+                    right: 2
+                  }
                 }}
                 Icon={() => { return <MaterialIcons name="keyboard-arrow-down" size={24} color="#fff" /> }}
               />

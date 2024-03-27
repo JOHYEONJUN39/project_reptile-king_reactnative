@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { Modal, View, Text, Pressable, StyleSheet, ScrollView } from 'react-native'
 import AddressItem from './AddressItem'
-import AddressModalHeader from './AddressModalHeader'
-import AddressModalFooter from './AddressModalFooter'
+import AddressHeader from './AddressHeader'
+import AddressFooter from './AddressFooter'
+import NewAddressModal from './NewAddressModal'
 
 const AddressModal = (): JSX.Element => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [addAddressModalVisible, setAddAddressModalVisible] = useState(false)
   return (
     <>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -18,7 +20,8 @@ const AddressModal = (): JSX.Element => {
 
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <AddressModalHeader
+            <AddressHeader
+              title='배송지 선택'
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
             />
@@ -26,10 +29,12 @@ const AddressModal = (): JSX.Element => {
               {/*  TODO: 사용자 정보에서 배송지를 가져와서 뿌려줘야 함 */}
               <AddressItem />
               <AddressItem />
+              <AddressItem />
+              <AddressItem />
             </ScrollView>
-            <AddressModalFooter
+            <AddressFooter
               title="배송지 추가"
-              onPress={() => { setModalVisible(false) }}
+              onPress={() => { setModalVisible(false); setAddAddressModalVisible(true) }}
             />
           </View>
         </View>
@@ -39,6 +44,11 @@ const AddressModal = (): JSX.Element => {
         onPress={() => { setModalVisible(true) }}>
         <Text style={styles.titleFont}>변경</Text>
       </Pressable>
+
+      <NewAddressModal
+        visible={addAddressModalVisible}
+        onClose={() => { setAddAddressModalVisible(false) }}
+      />
     </>
   )
 }
@@ -52,11 +62,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22
+    paddingBottom: 24,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalView: {
     width: '95%',
-    height: '60%',
+    height: 'auto',
+    maxHeight: 540,
     backgroundColor: '#1C5B20',
     borderColor: '#B1D074',
     borderWidth: 2,
@@ -85,9 +97,8 @@ const styles = StyleSheet.create({
   },
   titleFont: {
     fontSize: 20,
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center'
+    color: '#fff',
+    fontWeight: 'bold'
   },
   commonFont: {
     color: '#fff',

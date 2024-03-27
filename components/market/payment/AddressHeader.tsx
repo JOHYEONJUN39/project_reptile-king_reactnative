@@ -3,15 +3,16 @@ import React from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 
 interface AddressModalHeaderProps {
+  title: string
   modalVisible: boolean
   setModalVisible: (modalVisible: boolean) => void
 }
 
-const AddressModalHeader = ({ modalVisible, setModalVisible }: AddressModalHeaderProps): JSX.Element => {
+const AddressModalHeader = ({ title, modalVisible, setModalVisible }: AddressModalHeaderProps): JSX.Element => {
   return (
     <View style={styles.modalHeader}>
         <View style={{ flex: 1 }}></View>
-        <Text style={styles.titleFont}>배송지 선택</Text>
+        <Text style={styles.titleFont}>{title}</Text>
         <Pressable
           style={{ flex: 1, alignItems: 'flex-end' }}
           onPress={() => { setModalVisible(!modalVisible) }}>

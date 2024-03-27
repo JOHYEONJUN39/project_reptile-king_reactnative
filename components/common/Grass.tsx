@@ -10,7 +10,9 @@ const styles = StyleSheet.create({
   grass: {
     width: '100%',
     height: 200,
-    alignSelf: 'center'
+    position: 'absolute',
+    bottom: 0,
+    zIndex: -1
   }
 })
 

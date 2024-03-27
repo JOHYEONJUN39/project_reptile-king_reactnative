@@ -9,12 +9,12 @@ interface AddressModalFooterProps {
 const AddressModalFooter = ({ title, onPress }: AddressModalFooterProps): JSX.Element => {
   return (
       <View style={styles.modalFooter}>
-          <Pressable
-            style={[styles.button, styles.addAddressButton]}
-            onPress={() => { onPress() }}>
-            <Text style={styles.titleFont}>{title}</Text>
-          </Pressable>
-        </View>
+        <Pressable
+          style={styles.submitButton}
+          onPress={() => { onPress() }}>
+          <Text style={styles.titleFont}>{title}</Text>
+        </Pressable>
+      </View>
   )
 }
 
@@ -29,22 +29,19 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    padding: 12
+    padding: 8
   },
   titleFont: {
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold'
   },
-  button: {
-    borderRadius: 10,
-    padding: 10,
+  submitButton: {
+    borderRadius: 6,
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  addAddressButton: {
-    width: '80%',
-    height: 40,
+    alignItems: 'center',
+    width: '90%',
+    height: '100%',
     backgroundColor: '#A32273'
   }
 })

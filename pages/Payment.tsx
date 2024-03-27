@@ -2,6 +2,8 @@ import React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import OrderSection from '../components/market/payment/OrderSection'
 import DeliverySection from '../components/market/payment/DeliverySection'
+import OrderItemSection from '../components/market/payment/OrderItemSection'
+import TotalPaymentSection from '../components/market/payment/TotalPaymentSection'
 
 const Payment = (): JSX.Element => {
   return (
@@ -9,6 +11,8 @@ const Payment = (): JSX.Element => {
       <ScrollView contentContainerStyle={styles.inner}>
         <OrderSection />
         <DeliverySection />
+        <OrderItemSection />
+        <TotalPaymentSection />
       </ScrollView>
     </View>
   )

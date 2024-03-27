@@ -38,7 +38,7 @@ function MarketStack (): JSX.Element {
         name="Notify"
         component={Notify}
         options={{
-          header: () => <CommonHeader title='알림'/>
+          header: () => <BackCommonHeader title='알림'/>
         }}
       />
       <Stack.Screen
@@ -141,17 +141,6 @@ const App = (): JSX.Element => {
             }}
           />
           <Tab.Screen
-            name="LoginTab"
-            component={LoginStack}
-            options={{
-              title: '로그인',
-              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
-              tabBarIcon: ({ size }) => (
-                <MaterialIcons name="login" color={'#fff'} size={size} />
-              )
-            }}
-          />
-          <Tab.Screen
             name="CommunityTab"
             component={CommunityStack}
             options={{
@@ -159,6 +148,17 @@ const App = (): JSX.Element => {
               tabBarLabelStyle: { fontSize: 14, color: '#fff' },
               tabBarIcon: ({ size }) => (
                 <MaterialIcons name="groups" color={'#fff'} size={size} />
+              )
+            }}
+          />
+          <Tab.Screen
+            name="LoginTab"
+            component={LoginStack}
+            options={{
+              title: '로그인',
+              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
+              tabBarIcon: ({ size }) => (
+                <MaterialIcons name="login" color={'#fff'} size={size} />
               )
             }}
           />

@@ -14,7 +14,7 @@ const Login = (): JSX.Element => {
   const onsubmit = async (data: any): Promise<void> => {
     try {
       console.log('data:', data)
-      const response = await axios.post('http://172.21.4.11:8000/api/login', data)
+      const response = await axios.post('http://54.180.158.4:8000/api/login', data)
       console.log('response:', response)
       navigation.navigate('Market' as never)
     } catch (error) {
@@ -54,13 +54,19 @@ const Login = (): JSX.Element => {
           }}
         />
         <SubmitButton label='로그인' onPress={handleSubmit(onsubmit)} />
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>회원이 아니신가요?</Text>
-          <TouchableOpacity onPress={() => { navigation.navigate('SignUp' as never) }}>
-            <Text style={styles.footerLink}>지금 회원가입!</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+            <Text style={styles.footerText}>회원이 아니신가요?</Text>
+            <TouchableOpacity onPress={() => { navigation.navigate('SignUp' as never) }}>
+              <Text style={styles.footerLink}>지금 회원가입!</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.footerText}>비밀번호를 잊으셨나요?</Text>
+            <TouchableOpacity onPress={() => { navigation.navigate('EmailCredential' as never) }}>
+              <Text style={styles.footerLink}>비밀번호 재설정!</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
       <Grass />
     </View>
   )
@@ -69,8 +75,7 @@ const Login = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#072E0A',
-    justifyContent: 'space-between'
+    backgroundColor: '#072E0A'
   },
   inner: {
     paddingVertical: 24,

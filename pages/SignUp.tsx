@@ -13,7 +13,7 @@ const SignUp = (): JSX.Element => {
   const onsubmit = async (data: any): Promise<void> => {
     try {
       console.log('data:', data)
-      const response = await axios.post('http://172.21.4.11:8000/api/register', data)
+      const response = await axios.post('http://54.180.158.4:8000/api/register', data)
       console.log('response:', response)
       navigation.navigate('Login' as never)
     } catch (error) {
@@ -114,8 +114,7 @@ const SignUp = (): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#072E0A',
-    paddingBottom: 60
+    backgroundColor: '#072E0A'
   },
   inner: {
     paddingVertical: 24,

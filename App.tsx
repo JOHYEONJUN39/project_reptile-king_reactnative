@@ -1,22 +1,26 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import CommonHeader from './components/header/CommonHeader'
-import Login from './pages/Login'
-import SignUp from './pages/SignUp'
-import Market from './pages/Market'
-import MarketHeader from './components/header/MarketHeader'
-import Menu from './pages/Menu'
-import Notify from './pages/Notify'
-import Cart from './pages/Cart'
-import ProductsByCategory from './pages/ProductsByCategory'
-import ProductDetails from './pages/ProductDetails'
-import BackCommonHeader from './components/header/BackCommonHeader'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import Search from './pages/Search'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialIcons } from '@expo/vector-icons'
-import Community from './pages/Community'
-import Payment from './pages/Payment'
+import CommonHeader from './components/header/CommonHeader'
+import BackCommonHeader from './components/header/BackCommonHeader'
+import MarketHeader from './components/header/MarketHeader'
+import {
+  Login,
+  SignUp,
+  EmailCredential,
+  ChangePassword,
+  Market,
+  Menu,
+  ProductsByCategory,
+  ProductDetails,
+  Cart,
+  Search,
+  Notify,
+  Payment,
+  Community
+} from './pages'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -109,6 +113,20 @@ function LoginStack (): JSX.Element {
         component={SignUp}
         options={{
           header: () => <BackCommonHeader title='회원가입'/>
+        }}
+      />
+      <Stack.Screen
+        name="EmailCredential"
+        component={EmailCredential}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{
+          headerShown: false
         }}
       />
     </Stack.Navigator>

@@ -5,4 +5,5 @@ export interface AuthInput {
   control: Control<FieldValues>
   rules?: RegisterOptions
   placeholder?: string
+  style?: object
 }

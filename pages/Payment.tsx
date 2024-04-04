@@ -4,6 +4,7 @@ import OrderSection from '../components/market/payment/OrderSection'
 import DeliverySection from '../components/market/payment/DeliverySection'
 import OrderItemSection from '../components/market/payment/OrderItemSection'
 import TotalPaymentSection from '../components/market/payment/TotalPaymentSection'
+import PaymentMethodsSection from '../components/market/payment/PaymentMethodsSection'
 
 const Payment = (): JSX.Element => {
   return (
@@ -13,6 +14,7 @@ const Payment = (): JSX.Element => {
         <DeliverySection />
         <OrderItemSection />
         <TotalPaymentSection />
+        <PaymentMethodsSection />
       </ScrollView>
     </View>
   )

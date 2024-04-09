@@ -21,6 +21,7 @@ import {
   Payment,
   Community
 } from './pages'
+import Posts from './pages/Posts'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -91,7 +92,14 @@ function CommunityStack (): JSX.Element {
         name="Community"
         component={Community}
         options={{
-          header: () => <CommonHeader title='로그인'/>
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="Posts"
+        component={Posts}
+        options={{
+          headerShown: false
         }}
       />
     </Stack.Navigator>

@@ -17,6 +17,7 @@ const Input = ({ name, control, rules, placeholder, style }: AuthInput): JSX.Ele
         onChangeText={field.onChange}
         style={[styles.input, style]}
         placeholder={placeholder}
+        maxLength={30}
       />
       {error !== null && error !== undefined && <Text style={styles.error}>{error.message}</Text>}
     </>

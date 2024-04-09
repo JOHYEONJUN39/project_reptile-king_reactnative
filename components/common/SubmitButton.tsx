@@ -20,15 +20,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#467FD3',
     borderRadius: 5,
     alignSelf: 'flex-start',
-    marginTop: 24,
-    marginBottom: 24
+    marginVertical: 24,
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonLabel: {
     fontSize: 16,
     lineHeight: 32,
-    color: '#ffffff',
-    paddingVertical: 8,
-    paddingHorizontal: 24
+    color: '#ffffff'
   }
 })
 

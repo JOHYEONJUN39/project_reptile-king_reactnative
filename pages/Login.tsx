@@ -5,6 +5,9 @@ import SubmitButton from '../components/common/SubmitButton'
 import Input from '../components/common/Input'
 import Grass from '../components/common/Grass'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useEffect } from 'react'
+import { refreshToken } from '../api/auth/refreshToken'
 
 const Login = (): JSX.Element => {
   const { control, handleSubmit } = useForm()
@@ -16,11 +19,20 @@ const Login = (): JSX.Element => {
       console.log('data:', data)
       const response = await axios.post('http://54.180.158.4:8000/api/login', data)
       console.log('response:', response)
+      await AsyncStorage.setItem('authToken', response.headers.authorization as string)
       navigation.navigate('Market' as never)
     } catch (error) {
-      console.error('회원가입:', error)
+      console.error('로그인 에러', error)
     }
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      void refreshToken()
+    }, 50 * 60 * 1000)
+
+    return () => { clearInterval(interval) }
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -43,6 +55,7 @@ const Login = (): JSX.Element => {
           name='password'
           control={control}
           placeholder='비밀번호를 입력해주세요.'
+          secureText={true}
           rules={{
             required: '비밀번호를 입력해주세요.',
             minLength: { value: 8, message: '비밀번호는 최소 8글자여야 합니다.' },

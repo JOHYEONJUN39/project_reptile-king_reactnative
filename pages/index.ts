@@ -11,5 +11,12 @@ import Search from './Search'
 import Notify from './Notify'
 import Payment from './Payment'
 import Community from './Community'
+import Posts from './Posts'
+import Post from './Post'
+import Write from './Write'
+import EditPost from './EditPost'
+import CommunitySearch from './CommunitySearch'
+import Cage from './Cage'
+import CageDetail from './CageDetail'
 
-export { Login, SignUp, EmailCredential, ChangePassword, Market, Menu, ProductsByCategory, ProductDetails, Cart, Search, Notify, Payment, Community }
+export { Login, SignUp, EmailCredential, ChangePassword, Market, Menu, ProductsByCategory, ProductDetails, Cart, Search, Notify, Payment, Community, Posts, Post, Write, EditPost, CommunitySearch, Cage, CageDetail }

@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CommunityLayout from '../components/layout/community'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import type { ViewStyle } from 'react-native'
-import Category from '../components/market/Category'
-import shoppingData from '../assets/shoppingData.json'
 import { Text } from 'react-native-elements'
 import { Button } from '@rneui/themed'
 import { Entypo, MaterialIcons } from '@expo/vector-icons'
 import Line from '../components/common/Line'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import axios from 'axios'
+import type { CommunityNavigationProp, CommunityRouteProp } from '../types/RootStackParamList'
+import type { UserPost } from '../types/Community'
+import RenderHtml from 'react-native-render-html'
+import FormattedDate from '../components/common/FormattedDate'
 
 const Posts = (): JSX.Element => {
-  const categories = shoppingData
-  const [selectedSort, setSelectedSort] = useState<string>('전체글')
+  const navigation = useNavigation<CommunityNavigationProp>()
+  const route = useRoute<CommunityRouteProp>()
+  const { categoryId, categoryName } = route.params
+  const [selectedSort, setSelectedSort] = useState<string>('latest')
+  const [posts, setPosts] = useState<UserPost[]>([])
+  const [page, setPage] = useState(1)
+
+  const navigateToPosts = (postId: number): void => {
+    navigation.navigate('Post', { postId })
+  }
   const handleSortSelect = (sortType: string): void => {
     setSelectedSort(sortType)
+    setPage(1)
+    void fetchPosts(categoryId, sortType)
   }
 
   const getButtonStyle = (sortType: string): ViewStyle => ({
@@ -21,150 +35,110 @@ const Posts = (): JSX.Element => {
     opacity: selectedSort === sortType ? 1 : 0.5
   })
 
-  const loadMorePosts = (): void => {
-    // TODO: 서버에서 추가 데이터 가져오기
-    // const morePosts = [/* 추가 데이터 */]
-    // setPosts([...posts, ...morePosts])
+  const loadMorePosts = async (): Promise<void> => {
+    const nextPage = page + 1
+    try {
+      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?page=${nextPage}&sort=${selectedSort}`)
+      setPosts(prevPosts => [...prevPosts, ...response.data.data])
+      setPage(nextPage)
+    } catch (error) {
+      console.error(error)
+    }
   }
+  const fetchPosts = async (categoryId: number | undefined, sort = selectedSort): Promise<void> => {
+    try {
+      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?sort=${sort}`)
+      console.log(response.data.data)
+      setPosts(response.data.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    void fetchPosts(categoryId) // 첫 페이지 로드
+  }, [categoryId])
+
   return (
     <CommunityLayout title='파충류 이모저모' subtitle='주인님 같이 놀아요!'>
-      <ScrollView horizontal={true} contentContainerStyle={styles.categoryContainer} showsHorizontalScrollIndicator={false}>
-        {categories.map((category, index) => (
-          <Category
-          key={index}
-          name={category.name}
-          image={category.image}
-          />
-        ))}
-      </ScrollView>
       <View style={styles.postsContainer}>
         {/* 게시글 목록 */}
         <View style={styles.sortList}>
-          <Text style={styles.titleFont}>도마뱀</Text>
+          <Text style={styles.titleFont}>{categoryName} 게시판</Text>
         </View>
         {/* 소팅 목록 */}
         <View style={styles.sortList}>
           <Text style={styles.titleFont}>정렬:</Text>
-          <Button buttonStyle={styles.button} radius={0}>
+          {/* 전체글 */}
+          <Button
+            buttonStyle={getButtonStyle('latest')}
+            onPress={() => { handleSortSelect('latest') }}
+            radius={0}
+          >
             <Entypo name='news' size={15} color='#fff'/>
             <Text style={styles.commonFont}>전체글</Text>
           </Button>
+          {/* 인기순 */}
           <Button
-            buttonStyle={getButtonStyle('인기순')}
-            onPress={() => { handleSortSelect('인기순') }}
-            radius={0}>
+            buttonStyle={getButtonStyle('popular')}
+            onPress={() => { handleSortSelect('popular') }}
+            radius={0}
+          >
             <MaterialIcons name='local-fire-department' size={15} color='#fff'/>
             <Text style={styles.commonFont}>인기순</Text>
           </Button>
-          <Button buttonStyle={styles.button} radius={0}>
-            <Entypo name='new' size={15} color='#fff'/>
-            <Text style={styles.commonFont}>최신순</Text>
-          </Button>
-          <Button buttonStyle={styles.button} radius={0}>
+          {/* 등록순 */}
+          <Button
+            buttonStyle={getButtonStyle('oldest')}
+            onPress={() => { handleSortSelect('oldest') }}
+            radius={0}
+          >
             <MaterialIcons name='keyboard-arrow-down' size={24} color='#fff'/>
             <Text style={styles.commonFont}>등록순</Text>
           </Button>
         </View>
-        <View style={styles.postContainer}>
-          <Text style={styles.titleFont}>AI 도마뱀 인식 솔루션, React.js, Laravel 같이 진행해보실분 모집합니다 선착순 5명 !! ~~</Text>
-          <Text style={styles.commonFont} numberOfLines={4}>안녕하세요 서울대학교 대학생 창업팀 갈아만든2%입니다! 이 그룹은 2022년 10월에 결성되어 2023 예비 창업패키지 선정, 2024 SNUBIZ 최우수 선정으로 누적 지원금을 300만</Text>
-          <View style={styles.info}>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>by 갈아만든2%</Text>
+        {/* 게시글 */}
+        {posts.map((post) => (
+          <TouchableOpacity key={post.id} style={styles.postContainer} onPress={() => { navigateToPosts(post.id) }}>
+            <Text style={styles.titleFont} numberOfLines={3}>{post.title}</Text>
+            <View style={{ maxHeight: 100, overflow: 'hidden', marginTop: 8 }}>
+              <RenderHtml
+                  contentWidth={500}
+                  source={{
+                    html: `<div style="color: white; font-size: 16px;">${post?.content}</div>`
+                  }}
+                  tagsStyles={{
+                    p: { marginVertical: 0 }
+                  }}
+                  ignoredDomTags={['img', 'br']}
+                />
             </View>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>2022-10-10</Text>
+            <View style={styles.info}>
+              <View style={styles.infoText}>
+                <Text style={styles.commonFont}>by </Text>
+                <Text style={[styles.commonFont, { fontWeight: 'bold' }]}>{post.nickname}</Text>
+              </View>
+              <View style={styles.infoText}>
+                <FormattedDate dateString={post.created_at} />
+              </View>
             </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="remove-red-eye" size={16} color="#fff" />
-              <Text style={styles.commonFont}>20</Text>
+            <View style={styles.info}>
+              <View style={styles.infoText}>
+                <MaterialIcons name='remove-red-eye' size={16} color='#fff'/>
+                <Text style={styles.commonFont}>{post.views}</Text>
+              </View>
+              <View style={styles.infoText}>
+                <MaterialIcons name='chat' size={16} color='#fff'/>
+                <Text style={styles.commonFont}>{post.comments.length}</Text>
+              </View>
+              <View style={styles.infoText}>
+                <MaterialIcons name='favorite' size={16} color='#fff'/>
+                <Text style={styles.commonFont}>{post.likes}</Text>
+              </View>
             </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="chat" size={16} color="#fff" />
-              <Text style={styles.commonFont}>100</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="favorite" size={16} color="#fff" />
-              <Text style={styles.commonFont}>10</Text>
-            </View>
-          </View>
-          <Line color='#B1D074' weight={2} mV={8} />
-        </View>
-        <View style={styles.postContainer}>
-          <Text style={styles.titleFont}>AI 도마뱀 인식 솔루션, React.js, Laravel 같이 진행해보실분 모집합니다 선착순 5명 !! ~~</Text>
-          <Text style={styles.commonFont} numberOfLines={4}>안녕하세요 서울대학교 대학생 창업팀 갈아만든2%입니다! 이 그룹은 2022년 10월에 결성되어 2023 예비 창업패키지 선정, 2024 SNUBIZ 최우수 선정으로 누적 지원금을 300만</Text>
-          <View style={styles.info}>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>by 갈아만든2%</Text>
-            </View>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>2022-10-10</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="remove-red-eye" size={16} color="#fff" />
-              <Text style={styles.commonFont}>20</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="chat" size={16} color="#fff" />
-              <Text style={styles.commonFont}>100</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="favorite" size={16} color="#fff" />
-              <Text style={styles.commonFont}>10</Text>
-            </View>
-          </View>
-          <Line color='#B1D074' weight={2} mV={8} />
-        </View>
-        <View style={styles.postContainer}>
-          <Text style={styles.titleFont}>AI 도마뱀 인식 솔루션, React.js, Laravel 같이 진행해보실분 모집합니다 선착순 5명 !! ~~</Text>
-          <Text style={styles.commonFont} numberOfLines={4}>안녕하세요 서울대학교 대학생 창업팀 갈아만든2%입니다! 이 그룹은 2022년 10월에 결성되어 2023 예비 창업패키지 선정, 2024 SNUBIZ 최우수 선정으로 누적 지원금을 300만</Text>
-          <View style={styles.info}>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>by 갈아만든2%</Text>
-            </View>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>2022-10-10</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="remove-red-eye" size={16} color="#fff" />
-              <Text style={styles.commonFont}>20</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="chat" size={16} color="#fff" />
-              <Text style={styles.commonFont}>100</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="favorite" size={16} color="#fff" />
-              <Text style={styles.commonFont}>10</Text>
-            </View>
-          </View>
-          <Line color='#B1D074' weight={2} mV={8} />
-        </View>
-        <View style={styles.postContainer}>
-          <Text style={styles.titleFont}>AI 도마뱀 인식 솔루션, React.js, Laravel 같이 진행해보실분 모집합니다 선착순 5명 !! ~~</Text>
-          <Text style={styles.commonFont} numberOfLines={4}>안녕하세요 서울대학교 대학생 창업팀 갈아만든2%입니다! 이 그룹은 2022년 10월에 결성되어 2023 예비 창업패키지 선정, 2024 SNUBIZ 최우수 선정으로 누적 지원금을 300만</Text>
-          <View style={styles.info}>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>by 갈아만든2%</Text>
-            </View>
-            <View style={styles.infoText}>
-              <Text style={styles.commonFont}>2022-10-10</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="remove-red-eye" size={16} color="#fff" />
-              <Text style={styles.commonFont}>20</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="chat" size={16} color="#fff" />
-              <Text style={styles.commonFont}>100</Text>
-            </View>
-            <View style={styles.infoText}>
-              <MaterialIcons name="favorite" size={16} color="#fff" />
-              <Text style={styles.commonFont}>10</Text>
-            </View>
-          </View>
-          <Line color='#B1D074' weight={2} mV={8} />
-        </View>
+            <Line color='#B1D074' weight={2} mV={8}/>
+          </TouchableOpacity>
+        ))}
         {/* 더 불러오기 */}
         <Button
           onPress={loadMorePosts}
@@ -191,13 +165,14 @@ const styles = StyleSheet.create({
     minWidth: 500,
     flexDirection: 'row',
     overflow: 'scroll',
-    marginTop: 24
+    marginTop: 32
   },
   postsContainer: {
     backgroundColor: '#1C5B20',
     flex: 1,
     padding: 12,
-    marginHorizontal: 16
+    marginHorizontal: 16,
+    marginTop: 24
   },
   sortList: {
     flexDirection: 'row',

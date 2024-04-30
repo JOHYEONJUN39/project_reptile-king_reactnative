@@ -1,53 +1,63 @@
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import CommunityLayout from '../components//layout/community'
 import Line from '../components/common/Line'
 import PostTitle from '../components/community/PostTitle'
-import { useNavigation } from '@react-navigation/native'
-
-interface PostData {
-  category: string
-  posts: string[]
-}
-
-const generatePosts = (): PostData[] => {
-  const categories = ['도마뱀', '뱀', '거북이', '이구아나', '카멜레온']
-  const titles = [
-    '오늘의 파충류 관찰기',
-    '새로운 친구를 소개합니다',
-    '파충류 건강 관리 팁',
-    '내 파충류와의 재미있는 일화',
-    '파충류를 위한 최고의 사육 환경'
-  ]
-  // 각 카테고리별로 임시 포스트 데이터 생성
-  return categories.map(category => ({
-    category,
-    posts: Array.from({ length: 5 }, () => titles[Math.floor(Math.random() * titles.length)])
-  }))
-}
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useCallback, useState } from 'react'
+import axios from 'axios'
+import type { CommunityNavigationProp } from '../types/RootStackParamList'
+import type { Category, UserPost } from '../types/Community'
 
 const Community = (): JSX.Element => {
-  const navigation = useNavigation()
-  const sortCategory = (): void => {
-    navigation.navigate('Posts' as never)
+  const [postsByCategory, setPostsByCategory] = useState<Record<number, UserPost[]>>({})
+  const [categories, setCategories] = useState<Category[]>([])
+  const navigation = useNavigation<CommunityNavigationProp>()
+  const fetchPostsByCategory = async (categoryId: number): Promise<void> => {
+    try {
+      const response = await axios.get(`http://54.180.158.4:8000/api/posts/category/${categoryId}`)
+      setPostsByCategory(prevState => ({ ...prevState, [categoryId]: response.data.data }))
+    } catch (error) {
+      console.error(error)
+    }
   }
-  const data = generatePosts()
+  // 카테고리 가져오기
+  const fetchCategories = async (): Promise<void> => {
+    try {
+      const response = await axios.get<Category[]>('http://54.180.158.4:8000/api/categories')
+      const postCategories = response.data.filter(category => category.division === 'posts')
+      setCategories(postCategories)
+      // 각 카테고리별로 게시글 가져오기
+      postCategories.forEach(category => {
+        void fetchPostsByCategory(category.id)
+      })
+    } catch (error) {
+      console.error('카테고리를 불러오는 데 실패했습니다.', error)
+    }
+  }
+  useFocusEffect(
+    useCallback(() => {
+      void fetchCategories().then(() => {
+      })
+    }, [])
+  )
+
+  const navigateToPosts = (categoryId: number, categoryName: string): void => {
+    navigation.navigate('Posts', { categoryId, categoryName })
+  }
   return (
     <CommunityLayout title='파충류 이모저모' subtitle='주인님 같이 놀아요!'>
       <View style={styles.inner}>
-        {/* 최신글 section */}
-        <View style={styles.post}>
-          {data.map(({ category, posts }) => (
-            <View key={category} style={styles.titleContainer}>
-              <TouchableOpacity onPress={sortCategory}>
-                <Text style={styles.titleFont}>{category} 최신글</Text>
-              </TouchableOpacity>
-              <Line color='#39823E' weight={2} mV={8} />
-              {posts.map((title, index) => (
-                <PostTitle key={index} category={category} title={title} />
-              ))}
-            </View>
-          ))}
-        </View>
+        {categories.map((category) => (
+          <View key={category.id} style={styles.titleContainer}>
+            <TouchableOpacity onPress={() => { navigateToPosts(category.id, category.name) }}>
+              <Text style={styles.titleFont}>#{category.name} 최신글</Text>
+            </TouchableOpacity>
+            <Line color='#39823E' weight={2} mV={8} />
+            {postsByCategory[Number(category.id)]?.map((post) => (
+              <PostTitle key={post.id} category={post.category_name} title={post.title} id={post.id}/>
+            ))}
+          </View>
+        ))}
       </View>
     </CommunityLayout>
   )
@@ -64,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   inner: {
-    paddingTop: 24,
+    paddingTop: 32,
     paddingHorizontal: 16
   },
   post: {

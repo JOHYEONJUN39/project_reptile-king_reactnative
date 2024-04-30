@@ -13,21 +13,18 @@ import type { UserPost } from '../types/Community'
 import RenderHtml from 'react-native-render-html'
 import FormattedDate from '../components/common/FormattedDate'
 
-const Posts = (): JSX.Element => {
+const CommunitySearch = (): JSX.Element => {
   const navigation = useNavigation<CommunityNavigationProp>()
   const route = useRoute<CommunityRouteProp>()
-  const { categoryId, categoryName } = route.params
-  const [selectedSort, setSelectedSort] = useState<string>('latest')
+  const { searchQuery } = route.params
+  const [selectedSort, setSelectedSort] = useState<string>('전체글')
   const [posts, setPosts] = useState<UserPost[]>([])
-  const [page, setPage] = useState(1)
-
+  const [page, setPage] = useState(1) // 페이지 번호
   const navigateToPosts = (postId: number): void => {
     navigation.navigate('Post', { postId })
   }
   const handleSortSelect = (sortType: string): void => {
     setSelectedSort(sortType)
-    setPage(1)
-    void fetchPosts(categoryId, sortType)
   }
 
   const getButtonStyle = (sortType: string): ViewStyle => ({
@@ -37,18 +34,19 @@ const Posts = (): JSX.Element => {
 
   const loadMorePosts = async (): Promise<void> => {
     const nextPage = page + 1
+    const url = `http://54.180.158.4:8000/api/posts/search?search=${encodeURIComponent(searchTerm)}?page=${searchQuery}`
     try {
-      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?page=${nextPage}&sort=${selectedSort}`)
+      const response = await axios.get<UserPost[]>(url)
       setPosts(prevPosts => [...prevPosts, ...response.data.data])
       setPage(nextPage)
     } catch (error) {
       console.error(error)
     }
   }
-  const fetchPosts = async (categoryId: number | undefined, sort = selectedSort): Promise<void> => {
+  const fetchPosts = async (): Promise<void> => {
+    const url = `http://54.180.158.4:8000/api/posts/search?search=${encodeURIComponent(searchQuery)}`
     try {
-      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?sort=${sort}`)
-      console.log(response.data.data)
+      const response = await axios.get<UserPost[]>(url)
       setPosts(response.data.data)
     } catch (error) {
       console.error(error)
@@ -56,23 +54,22 @@ const Posts = (): JSX.Element => {
   }
 
   useEffect(() => {
-    void fetchPosts(categoryId) // 첫 페이지 로드
-  }, [categoryId])
-
+    void fetchPosts() // 첫 페이지 로드
+  }, [searchQuery])
   return (
     <CommunityLayout title='파충류 이모저모' subtitle='주인님 같이 놀아요!'>
       <View style={styles.postsContainer}>
         {/* 게시글 목록 */}
         <View style={styles.sortList}>
-          <Text style={styles.titleFont}>{categoryName} 게시판</Text>
+          <Text style={styles.titleFont}>{searchQuery} 검색결과:</Text>
         </View>
         {/* 소팅 목록 */}
         <View style={styles.sortList}>
           <Text style={styles.titleFont}>정렬:</Text>
           {/* 전체글 */}
           <Button
-            buttonStyle={getButtonStyle('latest')}
-            onPress={() => { handleSortSelect('latest') }}
+            buttonStyle={getButtonStyle('전체글')}
+            onPress={() => { handleSortSelect('전체글') }}
             radius={0}
           >
             <Entypo name='news' size={15} color='#fff'/>
@@ -80,17 +77,26 @@ const Posts = (): JSX.Element => {
           </Button>
           {/* 인기순 */}
           <Button
-            buttonStyle={getButtonStyle('popular')}
-            onPress={() => { handleSortSelect('popular') }}
+            buttonStyle={getButtonStyle('인기순')}
+            onPress={() => { handleSortSelect('인기순') }}
             radius={0}
           >
             <MaterialIcons name='local-fire-department' size={15} color='#fff'/>
             <Text style={styles.commonFont}>인기순</Text>
           </Button>
+          {/* 최신순 */}
+          <Button
+            buttonStyle={getButtonStyle('최신순')}
+            onPress={() => { handleSortSelect('최신순') }}
+            radius={0}
+          >
+            <Entypo name='new' size={15} color='#fff'/>
+            <Text style={styles.commonFont}>최신순</Text>
+          </Button>
           {/* 등록순 */}
           <Button
-            buttonStyle={getButtonStyle('oldest')}
-            onPress={() => { handleSortSelect('oldest') }}
+            buttonStyle={getButtonStyle('등록순')}
+            onPress={() => { handleSortSelect('등록순') }}
             radius={0}
           >
             <MaterialIcons name='keyboard-arrow-down' size={24} color='#fff'/>
@@ -103,15 +109,12 @@ const Posts = (): JSX.Element => {
             <Text style={styles.titleFont} numberOfLines={3}>{post.title}</Text>
             <View style={{ maxHeight: 100, overflow: 'hidden', marginTop: 8 }}>
               <RenderHtml
-                  contentWidth={500}
-                  source={{
-                    html: `<div style="color: white; font-size: 16px;">${post?.content}</div>`
-                  }}
-                  tagsStyles={{
-                    p: { marginVertical: 0 }
-                  }}
-                  ignoredDomTags={['img', 'br']}
-                />
+                contentWidth={90}
+                source={{
+                  html: `<div style="color: white; font-size: 16px;">${post.content}</div>`
+                }}
+                tagsStyles={{ p: { marginVertical: 0 } }}
+              />
             </View>
             <View style={styles.info}>
               <View style={styles.infoText}>
@@ -129,7 +132,7 @@ const Posts = (): JSX.Element => {
               </View>
               <View style={styles.infoText}>
                 <MaterialIcons name='chat' size={16} color='#fff'/>
-                <Text style={styles.commonFont}>{post.comments.length}</Text>
+                <Text style={styles.commonFont}>{post.length}</Text>
               </View>
               <View style={styles.infoText}>
                 <MaterialIcons name='favorite' size={16} color='#fff'/>
@@ -211,4 +214,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Posts
+export default CommunitySearch

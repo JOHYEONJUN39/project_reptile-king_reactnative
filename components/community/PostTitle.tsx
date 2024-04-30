@@ -1,21 +1,28 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import type { CommunityNavigationProp } from '../../types/RootStackParamList'
 
 interface Props {
   category: string
   title: string
+  id: number
 }
 
-const PostTitle = ({ category, title }: Props): JSX.Element => {
+const PostTitle = ({ category, title, id: postId }: Props): JSX.Element => {
+  const navigation = useNavigation<CommunityNavigationProp>()
+  const navigateToPosts = (postId: number): void => {
+    navigation.navigate('Post', { postId })
+  }
   return (
-    <View style={styles.posts}>
+    <TouchableOpacity style={styles.posts} activeOpacity={0.8} onPress={() => { navigateToPosts(postId) }}>
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryFont} numberOfLines={1}>{category}</Text>
       </View>
       <View style={{ maxWidth: '75%' }}>
         <Text style={styles.commonFont} numberOfLines={1}>{title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

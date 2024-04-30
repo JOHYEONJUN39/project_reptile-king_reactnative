@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 
-interface CommunityHeaderProps {
+interface ImageHeaderProps {
   title: string
   subtitle: string
 }
 
-const CommunityHeader = ({ title, subtitle }: CommunityHeaderProps): JSX.Element => {
+const ImageHeader = ({ title, subtitle }: ImageHeaderProps): JSX.Element => {
   return (
     <>
       <Image source={{ uri: 'https://i.ibb.co/xFF7XrL/Vmake-1712214533-2.jpg' }} style={{ width: '100%', height: 150 }} />
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CommunityHeader
+export default ImageHeader

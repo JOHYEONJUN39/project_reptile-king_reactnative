@@ -2,29 +2,38 @@ import React, { useState } from 'react'
 import { View, Pressable, Text, LayoutAnimation, StyleSheet } from 'react-native'
 import RotateArrow from '../../animation/RotateArrow'
 import OrderItem from './OrderItem'
+import { useRoute } from '@react-navigation/native'
 
 const OrderItemSection = (): JSX.Element => {
-  const [isOrdererOpen, setIsOrdererOpen] = useState(true)
+  const [isOrdererOpen, setIsOrdererOpen] = useState(false);
+  const route = useRoute();
+  const { selectedProducts } = route.params;
+
   const toggleOrdererSection = (): void => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    setIsOrdererOpen(!isOrdererOpen)
-  }
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setIsOrdererOpen(prev => !prev);
+  };
+
   return (
     <View style={styles.ordererItemContainer}>
       <Pressable style={[styles.row, { marginBottom: isOrdererOpen ? 24 : 0 }]} onPress={toggleOrdererSection}>
         <View style={styles.row}>
-          <Text style={styles.titleFont}>주문상품</Text>
-          <Text style={[styles.titleFont, { marginLeft: 4, fontSize: 16 }]}>1건</Text>
+          <Text style={styles.titleFont}>注文商品</Text>
+          <Text style={[styles.titleFont, { marginLeft: 4, fontSize: 16 }]}>
+            {selectedProducts.length}件
+          </Text>
         </View>
         <RotateArrow state={isOrdererOpen} />
       </Pressable>
       {isOrdererOpen && (
-        <>
-          <OrderItem />
-        </>
+        <View>
+          {selectedProducts.map(product => (
+            <OrderItem key={product.id} product={product} />
+          ))}
+        </View>
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

@@ -14,7 +14,7 @@ const Community = (): JSX.Element => {
   const navigation = useNavigation<CommunityNavigationProp>()
   const fetchPostsByCategory = async (categoryId: number): Promise<void> => {
     try {
-      const response = await axios.get(`http://54.180.158.4:8000/api/posts/category/${categoryId}`)
+      const response = await axios.get(`http://3.38.185.224:8000/api/posts/category/${categoryId}`)
       setPostsByCategory(prevState => ({ ...prevState, [categoryId]: response.data.data }))
     } catch (error) {
       console.error(error)
@@ -23,7 +23,7 @@ const Community = (): JSX.Element => {
   // 카테고리 가져오기
   const fetchCategories = async (): Promise<void> => {
     try {
-      const response = await axios.get<Category[]>('http://54.180.158.4:8000/api/categories')
+      const response = await axios.get<Category[]>('http://3.38.185.224:8000/api/categories')
       const postCategories = response.data.filter(category => category.division === 'posts')
       setCategories(postCategories)
       // 각 카테고리별로 게시글 가져오기
@@ -45,12 +45,12 @@ const Community = (): JSX.Element => {
     navigation.navigate('Posts', { categoryId, categoryName })
   }
   return (
-    <CommunityLayout title='파충류 이모저모' subtitle='주인님 같이 놀아요!'>
+    <CommunityLayout title='爬虫類あれこれ' subtitle='一緒に遊びましょう！'>
       <View style={styles.inner}>
         {categories.map((category) => (
           <View key={category.id} style={styles.titleContainer}>
             <TouchableOpacity onPress={() => { navigateToPosts(category.id, category.name) }}>
-              <Text style={styles.titleFont}>#{category.name} 최신글</Text>
+              <Text style={styles.titleFont}>#{category.name} 最新投稿</Text>
             </TouchableOpacity>
             <Line color='#39823E' weight={2} mV={8} />
             {postsByCategory[Number(category.id)]?.map((post) => (

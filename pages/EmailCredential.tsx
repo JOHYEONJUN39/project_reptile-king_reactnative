@@ -5,8 +5,8 @@ import EmailAuth from '../components/account/EmailAuth'
 
 const EmailCredential = (): JSX.Element => {
   return (
-    <ResetPasswordLayout>
-      <Text style={[styles.commonFont, { marginBottom: 8 }]}>가입한 이메일 주소를 입력해주세요.</Text>
+    <ResetPasswordLayout title='パスワード再設定'>
+      <Text style={[styles.commonFont, { marginBottom: 8 }]}>登録したメールアドレスを入力してください</Text>
       <EmailAuth/>
     </ResetPasswordLayout>
   )

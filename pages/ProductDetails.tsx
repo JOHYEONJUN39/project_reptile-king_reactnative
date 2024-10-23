@@ -5,20 +5,21 @@ import { useRoute } from '@react-navigation/native'
 import Rating from '../components/common/Rating'
 import Line from '../components/common/Line'
 import { MaterialIcons } from '@expo/vector-icons'
-import type { ProductProps } from '../types/ProductType'
+import type { ProductProp } from '../types/ProductType'
 import productList from '../assets/ProductData.json'
 import MovingLine from '../components/animation/MovingLine'
 import getDeliveryDay from '../hooks/getDeliveryDay'
 import ImageScroll from '../components/market/ImageScroll'
 import ReviewContents from '../components/market/ReviewContents'
 import ProductFooter from '../components/footer/ProductFooter'
+import axios from 'axios'
 
 const ProductDetails = (): JSX.Element => {
   const screenWidth = useWindowDimensions().width
   const route = useRoute<ProductRouteProp>()
   const { productCode } = route.params
-  const [product, setProduct] = useState<ProductProps | null>(null)
-  const [activeTab, setActiveTab] = useState('상품정보')
+  const [product, setProduct] = useState<ProductProp | null>(null)
+  const [activeTab, setActiveTab] = useState('商品情報')
   const [refreshing, setRefreshing] = useState(false)
   const tabData = [
     {
@@ -32,19 +33,23 @@ const ProductDetails = (): JSX.Element => {
   ]
 
   useEffect(() => {
-    const productData = productList.find((item: ProductProps) => item.code === productCode)
-    if (productData !== undefined && productData !== null) {
-      setProduct(productData as ProductProps)
-    } else {
-      console.error('Product not found')
+    const fetchProductData = async (): Promise<void> => {
+      try {
+        const response = await axios.get(`http://3.38.185.224:8000/api/goods/${productCode}`)
+        console.log('제발 그만해 좀', response.data)
+        setProduct(response.data)
+      } catch (error) {
+        console.error(error)
+      }
     }
+    void fetchProductData()
   }, [productCode])
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true)
-    // 데이터호출 API 추가시 사용
-    setTimeout(() => { setRefreshing(false) }, 2000)
-  }, [])
+  // const onRefresh = React.useCallback(() => {
+  //   setRefreshing(true)
+  //   // 데이터호출 API 추가시 사용
+  //   setTimeout(() => { setRefreshing(false) }, 2000)
+  // }, [])
 
   // 데이터호출 API 추가시 사용
   // useEffect(() => {
@@ -72,58 +77,62 @@ const ProductDetails = (): JSX.Element => {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            onRefresh={onRefresh}
             tintColor='#fff'
-            title='당겨서 새로고침!'
+            title='スワイプして再度読み！'
             titleColor='#fff'
           />
         }
       >
-        <Image source={{ uri: product?.image }} style={{ width: screenWidth, height: screenWidth }}/>
+        <Image
+          source={{ uri: product?.img_urls?.main }} 
+          style={{ width: screenWidth, height: screenWidth }} 
+        />
         <View style={styles.detail}>
-          <Text style={styles.text}>{product?.seller}</Text>
+          {/* <Text style={styles.text}>{product?.seller}</Text> */}
           <Text style={styles.name}>{product?.name}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Rating rating={4} />
-            <Text style={[styles.text, { marginLeft: 5 }]}>{product?.totalReview}</Text>
+            <Rating rating={product?.staravg ? product?.staravg : 0} />
+            <Text style={[styles.text, { marginLeft: 5 }]}>{product?.staravg ? product?.staravg : 0}</Text>
           </View>
           <Text style={styles.name}>{product?.price.toLocaleString()}원</Text>
         </View>
         <Line color='#39823E' weight={2} mV={2} />
         <View style={styles.delivery}>
           <View style={styles.deliveryInfo}>
-            <Text style={styles.text}>혜택</Text>
-            <Text style={[styles.text, { marginLeft: 5 }]}>{`${Math.round(Number(product?.price) * 0.001)}P 지급`}</Text>
+            <Text style={styles.text}>お得</Text>
+            <Text style={[styles.text, { marginLeft: 5 }]}>{`${Math.round(Number(product?.price) * 0.001)}P 支給`}</Text>
           </View>
           <View style={styles.deliveryInfo}>
-            <Text style={styles.text}>배송</Text>
+            <Text style={styles.text}>配送</Text>
             <Text style={[styles.text, { marginLeft: 5 }]}>
-              {product?.charge === 0 ? '무료배송 / 일반택배' : `${product?.charge}원 / 일반택배`}
+              {/* {product?.charge === 0 ? '무료배송 / 일반택배' : `${product?.charge}원 / 일반택배`} */}
+              300円 / 一般配送
             </Text>
           </View>
           <View style={styles.eta}>
             <MaterialIcons name='delivery-dining' size={24} color='#fff' style={{ marginRight: 5 }} />
-            <Text style={styles.text}>{getDeliveryDay()}(요일) 도착 예정</Text>
+            <Text style={styles.text}>{getDeliveryDay()}(曜日) 到着予定</Text>
           </View>
         </View>
         <View style={{ backgroundColor: '#072E0A' }}>
           <View style={styles.menu}>
-            <TouchableOpacity onPress={() => { setActiveTab('상품정보') }} style={styles.menuTap}>
-              <Text style={[styles.text, { color: activeTab === '상품정보' ? '#FF80DB' : '#fff' }]}>상품정보</Text>
+            <TouchableOpacity onPress={() => { setActiveTab('商品情報') }} style={styles.menuTap}>
+              <Text style={[styles.text, { color: activeTab === '商品情報' ? '#FF80DB' : '#fff' }]}>商品情報</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { setActiveTab('리뷰') }} style={styles.menuTap}>
-              <Text style={[styles.text, { color: activeTab === '리뷰' ? '#FF80DB' : '#fff' }]}>리뷰</Text>
+            <TouchableOpacity onPress={() => { setActiveTab('レビュー') }} style={styles.menuTap}>
+              <Text style={[styles.text, { color: activeTab === 'レビュー' ? '#FF80DB' : '#fff' }]}>レビュー</Text>
             </TouchableOpacity>
           </View>
           <MovingLine activeTab={activeTab} tabData={tabData}/>
           <Line color='#39823E' weight={2} />
         </View>
-          {activeTab === '상품정보'
-            ? (<ImageScroll contentImages={product?.contentImage ?? []} />)
-            : (<ReviewContents reviewData={product} />)
-          }
+        <Image
+          source={{ uri: product?.img_urls?.main }} 
+          style={{ width: screenWidth, height: screenWidth }} 
+        />
+
       </ScrollView>
-      <ProductFooter price={product?.price ?? 0} />
+      <ProductFooter id={productCode} price={product?.price ?? 0} name={product?.name} img={product?.img_urls?.main}/>
     </View>
   )
 }

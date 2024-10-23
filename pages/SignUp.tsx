@@ -14,11 +14,11 @@ const SignUp = (): JSX.Element => {
   const onsubmit = async (data: any): Promise<void> => {
     try {
       console.log('data:', data)
-      const response = await axios.post('http://54.180.158.4:8000/api/register', data)
+      const response = await axios.post('http://3.38.185.224:8000/api/register', data)
       console.log('response:', response)
       navigation.navigate('Login' as never)
     } catch (error) {
-      console.error('회원가입:', error)
+      console.error('サインアップ:', error)
     }
   }
 
@@ -26,85 +26,85 @@ const SignUp = (): JSX.Element => {
     <View style={styles.container}>
         <KeyboardAwareScrollView>
           <ScrollView contentContainerStyle={styles.inner}>
-            <Text style={styles.filed}>이름</Text>
+            <Text style={styles.filed}>お名前</Text>
             <Input
               name='name'
               control={control}
-              placeholder='이름을 입력해주세요.'
+              placeholder='お名前を入力してください'
               rules={{
-                required: '이름을 입력해주세요.',
-                minLength: { value: 2, message: '이름은 최소 2글자 이상입니다.' },
-                maxLength: { value: 10, message: '이름은 최대 10글자 입니다.' }
+                required: 'お名前を入力してください',
+                minLength: { value: 2, message: '名前は最低2文字です' },
+                maxLength: { value: 10, message: '名前は最大10文字です' }
               }}
             />
-            <Text style={styles.filed}>이메일</Text>
+            <Text style={styles.filed}>メールアドレス</Text>
             <Input
               name='email'
               control={control}
-              placeholder='이메일을 입력해주세요.'
+              placeholder='メールアドレスを入力してください'
               rules={{
-                required: '이메일을 입력해주세요.',
+                required: 'メールアドレスを入力してください',
                 pattern: {
                   value: /\S+@\S+\.\S+/,
-                  message: '이메일 형식에 맞게 입력해주세요.'
+                  message: 'メールアドレスを正しく入力してください'
                 }
               }}
             />
-            <Text style={styles.filed}>비밀번호</Text>
+            <Text style={styles.filed}>パスワード</Text>
             <Input
               name='password'
               control={control}
-              placeholder='비밀번호를 입력해주세요.'
+              placeholder='パスワードを入力してください'
               rules={{
-                required: '비밀번호를 입력해주세요.',
-                minLength: { value: 8, message: '비밀번호는 최소 8글자여야 합니다.' },
-                maxLength: { value: 16, message: '비밀번호는 최대 16글자까지 입력 가능합니다.' },
+                required: 'パスワードを入力してください。',
+                minLength: { value: 8, message: 'パスワードは最低8文字です。' },
+                maxLength: { value: 16, message: 'パスワードは最大16文字まで入力可能です。' },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@*&\-_]{8,16}$/,
-                  message: '비밀번호는 8~16자의 영어 대, 소문자, 숫자, !@*&-_만 입력 가능합니다.'
+                  message: 'パスワードは8～16文字の英字大文字、小文字、数字、!@*&-_のみ入力可能です。'
                 }
               }}
             />
-            <Text style={styles.filed}>비밀번호 확인</Text>
+            <Text style={styles.filed}>パスワード確認</Text>
             <Input
               name='password_confirmation'
               control={control}
-              placeholder='비밀번호를 다시 입력해주세요.'
+              placeholder='再度パスワードを入力してください。'
               rules={{
-                validate: value => value === watch('password') || '비밀번호가 일치하지 않습니다.'
+                validate: value => value === watch('password') || 'パスワードが一致しません。'
               }}
             />
-            <Text style={styles.filed}>닉네임</Text>
+            <Text style={styles.filed}>ニックネーム</Text>
             <Input
               name='nickname'
               control={control}
-              placeholder='닉네임을 입력해주세요.'
+              placeholder='ニックネームを入力してください。'
               rules={{
-                required: '닉네임을 입력해주세요.',
-                minLength: { value: 2, message: '닉네임은 최소 2글자 이상입니다.' },
-                maxLength: { value: 12, message: '닉네임은 최대 12글자 입니다.' }
+                required: 'ニックネームを入力してください。',
+                minLength: { value: 2, message: 'ニックネームは最低2文字以上です。' },
+                maxLength: { value: 12, message: 'ニックネームは最大12文字です。' }
               }}
             />
-            <Text style={styles.filed}>전화번호</Text>
+            <Text style={styles.filed}>電話番号</Text>
             <Input
               name='phone'
               control={control}
-              placeholder='휴대전화 번호를 입력해주세요.'
+              placeholder='携帯電話番号を入力してください。'
               rules={{
-                required: '휴대전화 번호를 입력해주세요.',
+                required: '携帯電話番号を入力してください。',
                 pattern: {
                   value: /^\d{3}-\d{3,4}-\d{4}$/,
-                  message: '휴대전화 번호를 정확히 입력해주세요.'
+                  message: '携帯電話番号を正確に入力してください。'
                 }
               }}
             />
             <TouchableOpacity style={styles.button} onPress={handleSubmit(onsubmit)}>
-              <Text style={styles.buttonLabel}>회원가입</Text>
+              <Text style={styles.buttonLabel}>サインアップ</Text>
             </TouchableOpacity>
             <View style={styles.footer}>
-              <Text style={styles.footerText}>이미 회원이신가요?</Text>
+              <Text style={styles.footerText}>既に会員ですか？</Text>
               <TouchableOpacity onPress={() => { navigation.navigate('Login' as never) }}>
-                <Text style={styles.footerLink}>지금 로그인!</Text>
+                <Text style={styles.footerLink}>今すぐログイン！</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>

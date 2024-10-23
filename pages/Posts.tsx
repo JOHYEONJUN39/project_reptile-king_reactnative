@@ -38,7 +38,7 @@ const Posts = (): JSX.Element => {
   const loadMorePosts = async (): Promise<void> => {
     const nextPage = page + 1
     try {
-      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?page=${nextPage}&sort=${selectedSort}`)
+      const response = await axios.get<UserPost[]>(`http://3.38.185.224:8000/api/posts/category/${categoryId}?page=${nextPage}&sort=${selectedSort}`)
       setPosts(prevPosts => [...prevPosts, ...response.data.data])
       setPage(nextPage)
     } catch (error) {
@@ -47,7 +47,7 @@ const Posts = (): JSX.Element => {
   }
   const fetchPosts = async (categoryId: number | undefined, sort = selectedSort): Promise<void> => {
     try {
-      const response = await axios.get<UserPost[]>(`http://54.180.158.4:8000/api/posts/category/${categoryId}?sort=${sort}`)
+      const response = await axios.get<UserPost[]>(`http://3.38.185.224:8000/api/posts/category/${categoryId}?sort=${sort}`)
       console.log(response.data.data)
       setPosts(response.data.data)
     } catch (error) {

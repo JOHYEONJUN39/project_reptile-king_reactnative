@@ -29,7 +29,7 @@ const Comment = ({ comment, allComments, postId, updateComments }: CommentProps)
     }
     const token = await AsyncStorage.getItem('authToken')
     try {
-      const response = await axios.post<CommentsData>(`http://54.180.158.4:8000/api/posts/${postId}/comments`, postData, {
+      const response = await axios.post<CommentsData>(`http://3.38.185.224:8000/api/posts/${postId}/comments`, postData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

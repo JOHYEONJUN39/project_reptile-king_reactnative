@@ -18,5 +18,7 @@ import EditPost from './EditPost'
 import CommunitySearch from './CommunitySearch'
 import Cage from './Cage'
 import CageDetail from './CageDetail'
+import MyPage from './MyPage'
+import EditProfile from './EditProfile'
 
-export { Login, SignUp, EmailCredential, ChangePassword, Market, Menu, ProductsByCategory, ProductDetails, Cart, Search, Notify, Payment, Community, Posts, Post, Write, EditPost, CommunitySearch, Cage, CageDetail }
+export { Login, SignUp, EmailCredential, ChangePassword, Market, Menu, ProductsByCategory, ProductDetails, Cart, Search, Notify, Payment, Community, Posts, Post, Write, EditPost, CommunitySearch, Cage, CageDetail, MyPage, EditProfile }

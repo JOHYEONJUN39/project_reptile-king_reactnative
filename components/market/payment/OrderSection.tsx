@@ -10,7 +10,7 @@ const OrderSection = (): JSX.Element => {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
   const [number, setNumber] = useState('')
-  const [isOrdererOpen, setIsOrdererOpen] = useState(true)
+  const [isOrdererOpen, setIsOrdererOpen] = useState(false)
   const toggleOrdererSection = (): void => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setIsOrdererOpen(!isOrdererOpen)
@@ -26,7 +26,7 @@ const OrderSection = (): JSX.Element => {
           <View style={styles.row}>
             <Text style={styles.commonFont}>이름</Text>
             <Input
-              placeholder="이름"
+              placeholder="유재경"
               inputStyle={{ color: '#fff' }}
               placeholderTextColor="#fff"
               containerStyle={styles.commonInputContainer}
@@ -38,7 +38,7 @@ const OrderSection = (): JSX.Element => {
           <View style={styles.row}>
             <Text style={styles.commonFont}>이메일</Text>
             <Input
-              placeholder="이메일"
+              placeholder="jkmilk"
               inputStyle={{ color: '#fff' }}
               placeholderTextColor="#fff"
               containerStyle={[styles.commonInputContainer, { width: '58%' }]}
@@ -74,7 +74,7 @@ const OrderSection = (): JSX.Element => {
           <View style={styles.row}>
             <Text style={styles.commonFont}>전화번호</Text>
             <Input
-              placeholder="전화번호"
+              placeholder="01036065474"
               inputStyle={{ color: '#fff' }}
               placeholderTextColor="#fff"
               containerStyle={styles.commonInputContainer}

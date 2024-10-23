@@ -1,4 +1,4 @@
-const days: string[] = ['일', '월', '화', '수', '목', '금', '토']
+const days: string[] = ['日', '月', '火', '水', '木', '金', '土']
 
 export default function getDeliveryDay (): string {
   const day: number = new Date().getDay()

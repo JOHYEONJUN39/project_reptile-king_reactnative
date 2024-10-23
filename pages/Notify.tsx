@@ -1,43 +1,88 @@
-import { View, Text, StyleSheet, ScrollView, Image, Pressable } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native'
 import { Avatar } from 'react-native-elements'
+import { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Notify = (): JSX.Element => {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      // AsyncStorage에서 알림 데이터 지우기
+      // await AsyncStorage.removeItem('notifications')
+      const storedNotifications = await AsyncStorage.getItem('notifications');
+      if (storedNotifications) {
+        setNotifications(JSON.parse(storedNotifications));
+      }
+    };
+
+    void fetchNotifications();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.inner}>
-        <View style={styles.notifyContainer}>
-          <View style={styles.iconContainer}>
-            <Avatar
-              size={50}
-              rounded
-              icon={{ name: 'bell', type: 'font-awesome', color: '#fff' }}
-              containerStyle={{ backgroundColor: '#FF80DB' }}
-            />
-          </View>
-          <View style={styles.contentContainer}>
-            <View style={styles.header}>
-              <Text style={styles.commonFont}>알림 ・ 2024-03-20 19:45</Text>
-              <Text style={styles.commonFont}>브리더님! 파충류의 건강상태가 의심됩니다!</Text>
-            </View>
-            <View style={styles.body}>
-              <Image
-                source={{ uri: 'https://i.postimg.cc/g0VxJ0Tq/image.jpg' }}
-                style={{ width: '100%', height: '60%', borderRadius: 8 }}
+          <View style={styles.notifyContainer}>
+            <View style={styles.iconContainer}>
+              <Avatar
+                size={50}
+                rounded
+                icon={{ name: 'bell', type: 'font-awesome', color: '#fff' }}
+                containerStyle={{ backgroundColor: '#FF80DB' }}
               />
-              <View style={{ width: '100%', height: '40%', justifyContent: 'space-between', marginTop: 10 }}>
-                <Text style={styles.commonFont}>의심증상 : 탈피부전</Text>
-                <Text style={styles.commonFont}>근거 : 3일간 활동량이 줄어들었습니다.</Text>
-                <Pressable style={{ width: '100%', height: '30%', backgroundColor: '#072E0A', borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.commonFont}>상세보기</Text>
-                </Pressable>
+            </View>
+            <View style={styles.contentContainer}>
+              <View style={styles.header}>
+                <Text style={styles.commonFont}>アラート゚ ・ 2024.7.10 ・ 11:22</Text>
+              </View>
+              <View style={styles.body}>
+                <View style={{ width: '100%', height: '80%', justifyContent: 'space-between', marginTop: 10 }}>
+                  <Text style={styles.titleFont}>湿度が高いです</Text>
+                  <Text style={styles.commonFont}>換気扇を作動しました</Text>
+                  <Pressable style={{ width: '100%', height: 40, backgroundColor: '#072E0A', borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.commonFont}>飼育ケージへ</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
     </View>
   )
 }
+//   return (
+//     <View style={styles.container}>
+//       <FlatList
+//         data={notifications}
+//         keyExtractor={(item, index) => index.toString()}
+//         renderItem={({ item }) => (
+//           <View style={styles.notifyContainer}>
+//             <View style={styles.iconContainer}>
+//               <Avatar
+//                 size={50}
+//                 rounded
+//                 icon={{ name: 'bell', type: 'font-awesome', color: '#fff' }}
+//                 containerStyle={{ backgroundColor: '#FF80DB' }}
+//               />
+//             </View>
+//             <View style={styles.contentContainer}>
+//               <View style={styles.header}>
+//                 <Text style={styles.commonFont}>アラート゚ ・ {item.request.content.data.created_at}</Text>
+//               </View>
+//               <View style={styles.body}>
+//                 <View style={{ width: '100%', height: '80%', justifyContent: 'space-between', marginTop: 10 }}>
+//                   <Text style={styles.titleFont}>{item.request.content.title}</Text>
+//                   <Text style={styles.commonFont}>{item.request.content.body}</Text>
+//                   <Pressable style={{ width: '100%', height: 40, backgroundColor: '#072E0A', borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
+//                     <Text style={styles.commonFont}>詳細画面へ</Text>
+//                   </Pressable>
+//                 </View>
+//               </View>
+//             </View>
+//           </View>
+//         )}
+//       />
+//     </View>
+//   )
+// }
 
 const styles = StyleSheet.create({
   commonFont: {
@@ -46,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   titleFont: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#fff',
     fontWeight: 'bold'
   },
@@ -66,10 +111,9 @@ const styles = StyleSheet.create({
   },
   notifyContainer: {
     width: '100%',
-    height: 400,
+    height: 250,
     flexDirection: 'row',
-    padding: 12,
-    marginBottom: 24
+    padding: 12
   },
   iconContainer: {
     width: '15%',
@@ -82,12 +126,11 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: '20%',
-    justifyContent: 'center'
+    height: '10%'
   },
   body: {
     width: '100%',
-    height: '80%',
+    height: '75%',
     backgroundColor: '#39823E',
     borderColor: '#B1D074',
     borderWidth: 1,

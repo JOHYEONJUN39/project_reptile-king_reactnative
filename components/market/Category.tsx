@@ -3,11 +3,11 @@ import type { CategoryList } from '../../types/ProductType'
 import { useNavigation } from '@react-navigation/native'
 import type { ProductNavigationProp } from '../../types/RootStackParamList'
 
-const Category = ({ image, name }: CategoryList): JSX.Element => {
+const Category = ({ id, image, name }: CategoryList): JSX.Element => {
   const navigation = useNavigation<ProductNavigationProp>()
-
+  const imageUrl = image ?? 'defaultImageUrl'
   const productsByCategory = (): void => {
-    navigation.navigate('ProductsByCategory', { category: name })
+    navigation.navigate('ProductsByCategory', { categoryId: id })
   }
 
   const styles = StyleSheet.create({
@@ -35,7 +35,7 @@ const Category = ({ image, name }: CategoryList): JSX.Element => {
 
   return (
     <TouchableOpacity style={styles.categoryBox} onPress={productsByCategory}>
-      <Image source={{ uri: image }} style={styles.categoryImg} />
+      <Image source={{ uri: imageUrl }} style={styles.categoryImg} />
       <Text style={styles.category}>{name}</Text>
     </TouchableOpacity>
   )

@@ -34,7 +34,7 @@ const CommunitySearch = (): JSX.Element => {
 
   const loadMorePosts = async (): Promise<void> => {
     const nextPage = page + 1
-    const url = `http://54.180.158.4:8000/api/posts/search?search=${encodeURIComponent(searchTerm)}?page=${searchQuery}`
+    const url = `http://3.38.185.224:8000/api/posts/search?search=${encodeURIComponent(searchTerm)}?page=${searchQuery}`
     try {
       const response = await axios.get<UserPost[]>(url)
       setPosts(prevPosts => [...prevPosts, ...response.data.data])
@@ -44,7 +44,7 @@ const CommunitySearch = (): JSX.Element => {
     }
   }
   const fetchPosts = async (): Promise<void> => {
-    const url = `http://54.180.158.4:8000/api/posts/search?search=${encodeURIComponent(searchQuery)}`
+    const url = `http://3.38.185.224:8000/api/posts/search?search=${encodeURIComponent(searchQuery)}`
     try {
       const response = await axios.get<UserPost[]>(url)
       setPosts(response.data.data)

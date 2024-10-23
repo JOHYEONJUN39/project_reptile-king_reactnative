@@ -6,7 +6,7 @@ export interface UserPost {
   comments: CommentsData[]
   img_urls: string[]
   category_id: number
-  category: Category
+  category: CategoryData
   parent_id: number
   category_name: string
   created_at: string
@@ -35,11 +35,12 @@ export interface CommentsData {
   updated_at: string
 }
 
-export interface Category {
+export interface CategoryData {
   name: string
   id: string
   division: string
   parent_id?: string
+  img_url?: string
 }
 
 export interface CategoryItem {

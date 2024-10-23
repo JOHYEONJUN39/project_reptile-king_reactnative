@@ -19,8 +19,8 @@ const DeliverySection = (): JSX.Element => {
         </View>
         <Text style={styles.commonFont}>경북 칠곡군 지천면 금송로 60, 글로벌생활관</Text>
         <View style={styles.row}>
-          <Text style={styles.commonFont}>일지매</Text>
-          <Text style={[styles.commonFont, { marginLeft: 8 }]}>010-5517-7581</Text>
+          <Text style={styles.commonFont}>유재경</Text>
+          <Text style={[styles.commonFont, { marginLeft: 8 }]}>010-3606-5474</Text>
         </View>
         <RNPickerSelect
           onValueChange={(value: string) => { console.log(value) }}

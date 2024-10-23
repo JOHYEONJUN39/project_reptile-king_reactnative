@@ -1,12 +1,16 @@
 import React from 'react'
-import type { AllOfProps } from '../../../types/common.interface'
 import { View, StyleSheet } from 'react-native'
 import BackCommonHeader from '../../header/BackCommonHeader'
 
-const ResetPasswordLayout = ({ children }: AllOfProps): JSX.Element => {
+interface ResetPasswordLayoutProps {
+  children: React.ReactNode
+  title: string
+}
+
+const ResetPasswordLayout = ({ children, title }: ResetPasswordLayoutProps): JSX.Element => {
   return (
     <>
-      <BackCommonHeader title='비밀번호 재설정' />
+      <BackCommonHeader title={title} />
       <View style={styles.container}>
         <View style={styles.inner}>
           {children}

@@ -23,7 +23,7 @@ const Post = (): JSX.Element => {
   const { postId } = route.params
   const fetchPost = async (postId: number | undefined): Promise<void> => {
     try {
-      const response = await axios.get<UserPost>(`http://54.180.158.4:8000/api/posts/${postId}`)
+      const response = await axios.get<UserPost>(`http://3.38.185.224:8000/api/posts/${postId}`)
       console.log(response.data)
       setPost(response.data)
     } catch (error) {
@@ -51,7 +51,7 @@ const Post = (): JSX.Element => {
     };
     const token = await AsyncStorage.getItem('authToken')
     try {
-      const response = await axios.post(`http://54.180.158.4:8000/api/posts/${postId}/comments`, postData, {
+      const response = await axios.post(`http://3.38.185.224:8000/api/posts/${postId}/comments`, postData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -85,7 +85,7 @@ const Post = (): JSX.Element => {
           onPress: async () => { // '삭제'를 누를 경우 실행될 함수
             const token = await AsyncStorage.getItem('authToken');
             try {
-              const response = await axios.delete(`http://54.180.158.4:8000/api/posts/${postId}`, {
+              const response = await axios.delete(`http://3.38.185.224:8000/api/posts/${postId}`, {
                 headers: {
                   Authorization: `Bearer ${token}`
                 }

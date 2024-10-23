@@ -2,7 +2,7 @@ import type { NavigationProp, RouteProp } from '@react-navigation/native'
 
 export interface RootStackParamList {
   Login: undefined
-  Product: { category?: string, productCode?: string }
+  Product: { categoryId?: string, productCode?: string }
   VerifyAuth: { email?: string, code?: string }
   Community: { categoryId?: string, postId?: number, categoryName?: string, searchQuery?: string }
   Cage: { cageId?: number }

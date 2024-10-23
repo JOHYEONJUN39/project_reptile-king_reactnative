@@ -1,51 +1,49 @@
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, TextInput, FlatList, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Result from '../components/market/search/Result'
 import products from '../assets/ProductData.json'
 
 const Search = (): JSX.Element => {
-  const navigation = useNavigation()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [results, setResults] = useState<any[]>([])
+  const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  
   const goBack = (): void => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
-  // useEffect(() => {
-  //   const fetchResults = async (): Promise<void> => {
-  //     if (searchQuery.trim() === '') {
-  //       setResults([])
-  //       return
-  //     }
-  //     try {
-  //       const response = await axios.get(`YOUR_API_URL/search?query=${searchQuery}`)
-  //       setResults(response.data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-
-  //   fetchResults().catch(console.error)
-  // }, [searchQuery])
   useEffect(() => {
-    const fetchResults = (): void => {
+    const fetchResults = async (): Promise<void> => {
       if (searchQuery.trim() === '') {
-        setResults([])
-        return
+        setResults([]);
+        return;
       }
 
-      // 상품 이름을 기반으로 필터링합니다.
-      const filteredResults = products.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      setLoading(true); // 로딩 시작
 
-      setResults(filteredResults)
-    }
+      try {
+        const response = await axios.get('http://3.38.185.224:8000/api/goods');
+        const products = response.data; // API에서 가져온 상품 데이터
 
-    fetchResults()
-  }, [searchQuery])
+        // 상품 이름을 기반으로 필터링합니다.
+        const filteredResults = products.filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        setResults(filteredResults);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false); // 로딩 종료
+      }
+    };
+
+    fetchResults();
+  }, [searchQuery]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -62,20 +60,32 @@ const Search = (): JSX.Element => {
               onChangeText={setSearchQuery}
               autoFocus={true}
             />
-            <MaterialIcons name="cancel" size={18} color="#888" style={{ marginHorizontal: 6 }}/>
+            <TouchableOpacity onPress={() => setSearchQuery('')}>
+              <MaterialIcons name="cancel" size={18} color="#888" style={{ marginHorizontal: 6 }}/>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
       <View style={styles.results}>
-      <FlatList
-        data={results}
-        keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
-        renderItem={({ item }) => <Result text={item.name} searchQuery={searchQuery} code={item.code}/>}
-        style={{ width: '100%' }}
-      />
+        {loading ? (
+          <ActivityIndicator size="large" color="#6200ea" /> // 로딩 인디케이터
+        ) : (
+          <>
+            {results.length === 0 && searchQuery.trim() !== '' ? (
+              <Text style={styles.noResults}>일치하는 상품이 없습니다.</Text>
+            ) : (
+              <FlatList
+                data={results}
+                keyExtractor={(item) => item.id?.toString()}
+                renderItem={({ item }) => <Result text={item.name} searchQuery={searchQuery} code={item.code}/>}
+                style={{ width: '100%' }}
+              />
+            )}
+          </>
+        )}
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -124,6 +134,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 20
+  },
+  noResults: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 16,
+    color: 'white',
   }
 })
 

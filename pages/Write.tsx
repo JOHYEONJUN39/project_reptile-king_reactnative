@@ -12,7 +12,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { S3Client } from '@aws-sdk/client-s3'
-import type { Category, CategoryItem } from '../types/Community'
+import type { CategoryData, CategoryItem } from '../types/Community'
 import { useUploadImagesToS3 } from '../hooks/useUploadImagesToS3'
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION } from '@env'
 
@@ -44,7 +44,7 @@ const useFetchCategories = (): CategoryState => {
   useEffect(() => {
     const fetchCategories = async (): Promise<void> => {
       try {
-        const response = await axios.get<Category[]>('http://54.180.158.4:8000/api/categories')
+        const response = await axios.get<CategoryData[]>('http://3.38.185.224:8000/api/categories')
         console.log('response', response.data)
         const mainCategories = response.data.filter(category => category.division === 'posts').map(category => ({
           label: category.name,
@@ -113,7 +113,7 @@ const Write = (): JSX.Element => {
     // 사용자 권한 요청
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
     if (status !== 'granted') {
-      alert('사진 라이브러리에 접근하기 위해 권한이 필요합니다.')
+      alert('ライブラリ権限が必要です')
       return
     }
     // 라이브러리를 열어서 사용자가 이미지를 선택
@@ -167,7 +167,7 @@ const Write = (): JSX.Element => {
         img_urls: imgUrls.map(img => img.url)
       }
       const token = await AsyncStorage.getItem('authToken')
-      await axios.post('http://54.180.158.4:8000/api/posts', postData, {
+      await axios.post('http://3.38.185.224:8000/api/posts', postData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -175,24 +175,24 @@ const Write = (): JSX.Element => {
       // alert('글이 성공적으로 작성되었습니다.')
       navigation.goBack()
     } catch (error) {
-      console.error('글 작성에 실패했습니다.', error)
+      console.error('投稿に失敗しました', error)
       // alert('글 작성에 실패했습니다.')
     }
   }
   return (
-    <CommunityLayout title='파충류 이모저모' subtitle='주인님 같이 놀아요!' footer={false}>
+    <CommunityLayout title='爬虫類あれこれ' subtitle='一緒に遊びましょう！' footer={false}>
       <View style={styles.inner}>
         {/* 제목 입력란 */}
         <Input
           name='title'
           control={control}
-          placeholder='제목을 입력하세요'
+          placeholder='タイトルを入力してください'
           style={styles.input}
         />
         {/* 메인 카테고리 */}
         <RNPickerSelect
           onValueChange={(value: string) => { setSelectedMainCategory(value) }}
-          placeholder={{ label: '메인 카테고리 선택', value: null }}
+          placeholder={{ label: 'メインカテゴリー', value: null }}
           items={categories}
           style={pickerSelectStyles}
           Icon={() => <MaterialIcons name="keyboard-arrow-down" size={24} color="#fff" />}
@@ -200,7 +200,7 @@ const Write = (): JSX.Element => {
         {/* 서브 카테고리 */}
         <RNPickerSelect
           onValueChange={(value: string) => { setSelectedSubCategory(value) }}
-          placeholder={{ label: '서브 카테고리 선택', value: null }}
+          placeholder={{ label: 'サブカテゴリー', value: null }}
           items={subCategories}
           style={pickerSelectStyles}
           Icon={() => <MaterialIcons name="keyboard-arrow-down" size={24} color="#fff" />}
@@ -230,13 +230,13 @@ const Write = (): JSX.Element => {
               ref={richText}
               style={styles.rich}
               editorStyle={{ backgroundColor: 'transparent', color: '#fff', placeholderColor: '#fff' }}
-              placeholder={'내용을 입력하세요...'}
+              placeholder={'本文を入力してください'}
               useContainer={false}
             />
           {/* 에디터의 툴바 */}
         </SafeAreaView>
         <SubmitButton
-          label='작성완료'
+          label='投稿する'
           onPress={handleSubmit(onSubmit)}
           buttonStyle={styles.submitButton}
           textStyle={{ fontSize: 18, fontWeight: '500' }}

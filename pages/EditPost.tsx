@@ -32,7 +32,7 @@ const useFetchCategories = (): void => {
   useEffect(() => {
     const fetchCategories = async (): Promise<void> => {
       try {
-        const response = await axios.get('http://54.180.158.4:8000/api/categories')
+        const response = await axios.get('http://3.38.185.224:8000/api/categories')
         const mainCategories = response.data.filter(category => category.division === 'posts').map(category => ({
           label: category.name,
           value: String(category.id)
@@ -73,7 +73,7 @@ const EditPost = (): JSX.Element => {
     const fetchPostData = async () => {
       try {
         const token = await AsyncStorage.getItem('authToken');
-        const response = await axios.get(`http://54.180.158.4:8000/api/posts/${postId}`, {
+        const response = await axios.get(`http://3.38.185.224:8000/api/posts/${postId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -160,7 +160,7 @@ const EditPost = (): JSX.Element => {
         img_urls: imgUrls.map(img => img.url)
       }
       const token = await AsyncStorage.getItem('authToken')
-      await axios.patch(`http://54.180.158.4:8000/api/posts/${postId}`, postData, {
+      await axios.patch(`http://3.38.185.224:8000/api/posts/${postId}`, postData, {
         headers: {
           Authorization: `Bearer ${token}`
         }

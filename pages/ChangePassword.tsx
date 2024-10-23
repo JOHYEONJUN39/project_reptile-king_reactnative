@@ -22,7 +22,7 @@ const ChangePassword = (): JSX.Element => {
       password_confirmation: data.confirmPassword
     }
     console.log('requestData:', requestData)
-    await axios.patch('http://54.180.158.4:8000/api/forget-password/change-password', requestData)
+    await axios.patch('http://3.38.185.224:8000/api/forget-password/change-password', requestData)
       .then(response => {
         console.log('response:', response)
         Alert.alert('비밀번호 재설정', '비밀번호가 변경되었습니다. 다시 로그인해주세요.')
@@ -36,7 +36,7 @@ const ChangePassword = (): JSX.Element => {
   }
 
   return (
-    <ResetPasswordLayout>
+    <ResetPasswordLayout title=''>
       <Input
         name="password"
         placeholder="새 비밀번호"

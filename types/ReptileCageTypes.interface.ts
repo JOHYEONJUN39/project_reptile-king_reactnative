@@ -9,11 +9,12 @@ export interface ReptileCage {
   name: string
   reptileSerialCode: string
   memo: string
-  setTemp: string
-  setHum: number
+  set_temp: string
+  set_hum: number
   serialCode: string
-  imgUrls: string[]
+  img_urls: string[]
   createdAt: string
   updatedAt: string
   expiredAt: string
+  location: string
 }

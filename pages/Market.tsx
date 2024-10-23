@@ -1,15 +1,16 @@
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text, useWindowDimensions, Image } from 'react-native'
-import type { CategoryList } from '../types/ProductType'
 import Category from '../components/market/Category'
-import shoppingData from '../assets/shoppingData.json'
 import Line from '../components/common/Line'
 import ProductBox from '../components/market/ProductBox'
-import productData from '../assets/ProductData.json'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import type { CategoryData } from '../types/Community'
+import type { ProductProp } from '../types/ProductType'
 
 const Market = (): JSX.Element => {
   const windowWidth = useWindowDimensions().width
-
-  const categories: CategoryList[] = shoppingData
+  const [categories, setCategories] = useState<CategoryData[]>([])
+  const [productData, setProductData] = useState<ProductProp[]>([])
 
   const styles = StyleSheet.create({
     container: {
@@ -54,6 +55,30 @@ const Market = (): JSX.Element => {
     }
   })
 
+  const fetchCategories = async (): Promise<void> => {
+    try {
+      const response = await axios.get<CategoryData[]>('http://3.38.185.224:8000/api/categories')
+      const categories = response.data.filter((category: CategoryData) => category.division === 'goods')
+      setCategories(categories)
+    } catch (error) {
+      console.error('카테고리를 불러오는 중 오류가 발생했습니다.', error)
+    }
+  }
+
+  const fetchProducts = async (): Promise<void> => {
+    try {
+      const response = await axios.get<ProductProp[]>('http://3.38.185.224:8000/api/goods')
+      setProductData(response.data)
+    } catch (error) {
+      console.error('상품을 불러오는 중 오류가 발생했습니다.', error)
+    }
+  }
+
+  useEffect(() => {
+    void fetchCategories()
+    void fetchProducts()
+  }, [])
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.inner}>
@@ -64,15 +89,16 @@ const Market = (): JSX.Element => {
           {categories.map((category, index) => (
           <Category
             key={index}
+            id={category.id}
             name={category.name}
-            image={category.image}
+            image={category.img_url}
           />
           ))}
         </ScrollView>
         <Line color='#39823E' weight={4} mV={12} />
-        <Text style={styles.offerTitle}>오늘의 추천 상품</Text>
+        <Text style={styles.offerTitle}>おすすめ商品</Text>
         <View style={styles.offerBox}>
-          {productData.map((product, index) => (
+          {productData.map((product: ProductProp, index) => (
           <ProductBox
             key={index}
             product={product}

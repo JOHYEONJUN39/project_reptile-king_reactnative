@@ -6,20 +6,20 @@ import Line from '../common/Line'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import type { Category } from '../../types/Community'
+import type { CategoryData } from '../../types/Community'
 import type { CommunityNavigationProp } from '../../types/RootStackParamList'
 
 const CommunityFooter = (): JSX.Element => {
   const navigation = useNavigation()
   const communityNavigation = useNavigation<CommunityNavigationProp>()
-  const [categories, setCategories] = useState<Category[]>([])
-  const [subCategories, setSubCategories] = useState<Category[]>([])
+  const [categories, setCategories] = useState<CategoryData[]>([])
+  const [subCategories, setSubCategories] = useState<CategoryData[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const fetchCategories = async (): Promise<void> => {
     try {
-      const response = await axios.get<Category[]>('http://54.180.158.4:8000/api/categories')
-      const categories = response.data.filter((category: Category) => category.division === 'posts')
-      const subCategories = response.data.filter((category: Category) => category.division === 'subPosts')
+      const response = await axios.get<CategoryData[]>('http://3.38.185.224:8000/api/categories')
+      const categories = response.data.filter((category: CategoryData) => category.division === 'posts')
+      const subCategories = response.data.filter((category: CategoryData) => category.division === 'subPosts')
       console.log('하단 카테고리', subCategories)
       setCategories(categories)
       setSubCategories(subCategories)

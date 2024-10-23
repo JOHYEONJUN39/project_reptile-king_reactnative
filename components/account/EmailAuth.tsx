@@ -22,7 +22,7 @@ const EmailAuth = (): JSX.Element => {
         setTimer(timer - 1)
       }, 1000)
     } else if (timer === 0) {
-      alert('인증 시간이 초과되었습니다. 다시 시도해주세요.')
+      alert('認証時間が超過しました。再試行してください。')
       setTimer(null)
     }
 
@@ -34,7 +34,7 @@ const EmailAuth = (): JSX.Element => {
   }, [timer])
 
   const emailAuth = (data: FieldValues): void => {
-    axios.post('http://54.180.158.4:8000/api/forget-password', { email: data.email })
+    axios.post('http://3.38.185.224:8000/api/forget-password', { email: data.email })
       .then(response => {
         if (response.status === 200) {
           setOnCodeSection(true)
@@ -45,14 +45,14 @@ const EmailAuth = (): JSX.Element => {
         if (error.response.status === 400) {
           setError('email', {
             type: 'manual',
-            message: '유효하지 않는 이메일입니다.'
+            message: '有効ではないメールアドレスです。'
           })
         }
       })
   }
 
   const onValid = (data: FieldValues): void => {
-    axios.post('http://54.180.158.4:8000/api/forget-password/verify-auth', { email: data.email, authCode: data.authCode })
+    axios.post('http://3.38.185.224:8000/api/forget-password/verify-auth', { email: data.email, authCode: data.authCode })
       .then(response => {
         if (response.status === 200) {
           setTimer(null)
@@ -63,13 +63,13 @@ const EmailAuth = (): JSX.Element => {
         if (error.response.status === 400) {
           setError('authCode', {
             type: 'manual',
-            message: '인증코드를 다시 받아주세요'
+            message: '認証コードを再度受け取ってください。'
           })
         }
         if (error.response.status === 401) {
           setError('authCode', {
             type: 'manual',
-            message: '인증 시간이 초과되었습니다. 다시 시도해주세요.'
+            message: '認証時間が超過しました。再試行してください。'
           })
         }
       })
@@ -82,12 +82,12 @@ const EmailAuth = (): JSX.Element => {
         <Input
           name='email'
           control={control}
-          placeholder='이메일을 입력해주세요.'
+          placeholder='メールアドレスを入力してください。'
           rules={{
-            required: '이메일을 입력해주세요.',
+            required: 'メールアドレスを入力してください。',
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: '이메일 형식에 맞게 입력해주세요.'
+              message: 'メールアドレスの形式に従って入力してください。'
             }
           }}
         />
@@ -97,23 +97,23 @@ const EmailAuth = (): JSX.Element => {
             activeOpacity={0.6}
             onPress={handleSubmit(emailAuth)}
           >
-            <Text style={styles.titleFont}>확인</Text>
+            <Text style={styles.titleFont}>確認</Text>
           </TouchableOpacity>
         </View>
       </View>
       {/* codeAuth Section */}
       {onCodeSection &&
         <View>
-          <Text style={[styles.commonFont, { marginBottom: 8 }]}>제공하신 이메일 주소로 인증 코드를 보내드렸습니다.</Text>
+          <Text style={[styles.commonFont, { marginBottom: 8 }]}>提供されたメールアドレスに認証コードを送信しました。</Text>
           <View style={styles.inputWrap}>
             <Input
               name='authCode'
               control={control}
-              placeholder='7자리 코드'
+              placeholder='7桁のコード'
               rules={{
-                required: '인증코드를 입력해주세요.',
-                minLength: { value: 7, message: '인증코드는 7자리 입니다.' },
-                maxLength: { value: 7, message: '인증코드는 7자리 입니다.' }
+                required: '認証コードを入力してください。',
+                minLength: { value: 7, message: '認証コードは7桁です。' },
+                maxLength: { value: 7, message: '認証コードは7桁です。' }
               }}
             />
             <View style={styles.buttonContainer}>
@@ -127,7 +127,7 @@ const EmailAuth = (): JSX.Element => {
                 activeOpacity={0.6}
                 onPress={handleSubmit(onValid)}
               >
-                <Text style={styles.titleFont}>확인</Text>
+                <Text style={styles.titleFont}>確認</Text>
               </TouchableOpacity>
             </View>
           </View>

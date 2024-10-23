@@ -4,7 +4,7 @@ import axios from 'axios'
 export const refreshToken = async (): Promise<void> => {
   try {
     const currentToken = await AsyncStorage.getItem('authToken')
-    const response = await axios.post('http://54.180.158.4:8000/api/refresh-token', {}, {
+    const response = await axios.post('http://3.38.185.224:8000/api/refresh-token', {}, {
       headers: {
         Authorization: `Bearer ${currentToken}`
       }

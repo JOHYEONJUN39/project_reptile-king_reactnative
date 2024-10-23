@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, ScrollView } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 import CartContent from '../components/market/cart/CartContent'
+import { Button } from '@rneui/themed'
+import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { useCart } from '../context/CartContext'
 
 const Cart = (): JSX.Element => {
-  const [products, setProducts] = useState([
-    { id: 1, seller: '렙틸킹', imageUri: 'https://i.postimg.cc/sx1jSsX7/image.jpg', productName: '이탈리아 베네치아의 장인이 만든 사육장', isChecked: false, price: 40000, charge: 3000, quantity: 1 },
-    { id: 2, seller: '파충류 연구소', imageUri: 'https://contents.sixshop.com/thumbnails/uploadedFiles/32210/product/image_1628667429087_1000.jpg', productName: '장인의 손으로 만들어진 이탈리아 베네치아 사육장', isChecked: false, price: 20000, charge: 3000, quantity: 1 }
-  ])
+  const navigation = useNavigation()
+  const { cart, setCart } = useCart()
+  const [products, setProducts] = useState(cart)
+  console.log('장바구니 데이터', products)
   const toggleChecked = (id: number): void => {
     setProducts(prevProducts => {
       const updatedProducts = prevProducts.map(product =>
@@ -28,6 +32,15 @@ const Cart = (): JSX.Element => {
         : product
     ))
   }
+  const handleRemove = (id: string) => {
+    const updatedProducts = products.filter(product => product.id !== id);
+    setProducts(updatedProducts);
+    setCart(updatedProducts); // 전역 상태에서 제거
+  }
+  const handlePayment = () => {
+    const selectedProducts = products.filter(product => product.isChecked);
+    navigation.navigate('Payment', { selectedProducts }); // 결제 화면으로 이동하며 선택한 상품 전달
+  }
   const totalPrice = products.reduce((acc, product) => product.isChecked ? acc + product.price * product.quantity : acc, 0)
   const shippingFee = totalPrice === 0 ? 0 : (totalPrice >= 50000 ? 0 : 3000)
   return (
@@ -45,7 +58,7 @@ const Cart = (): JSX.Element => {
             setChecked(!checked)
             setProducts(products.map(product => ({ ...product, isChecked: !checked })))
           }}
-          title='전체선택'
+          title='すべて選択'
           textStyle={styles.text}
         />
         <View style={styles.cartContainer}>
@@ -53,30 +66,35 @@ const Cart = (): JSX.Element => {
             <CartContent
               key={product.id}
               id={product.id}
-              seller={product.seller}
+              // seller={product.seller}
               price={product.price}
-              imageUri={product.imageUri}
-              productName={product.productName}
+              imageUri={product.img}
+              productName={product.name}
               isChecked={product.isChecked}
               toggleChecked={() => { toggleChecked(product.id) }}
               onQuantityChange={handleQuantityChange}
+              onRemove={handleRemove}
             />
           ))}
         </View>
         <View style={styles.footer}>
           <View style={styles.row}>
-            <Text style={styles.text}>상품금액</Text>
+            <Text style={styles.text}>商品値段</Text>
             <Text style={styles.text}>{totalPrice.toLocaleString()}원</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.text}>배송비</Text>
+            <Text style={styles.text}>配送費用</Text>
             <Text style={styles.text}>{shippingFee.toLocaleString()}원</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.text}>주문금액</Text>
+            <Text style={styles.text}>注文金額</Text>
             <Text style={styles.text}>{(totalPrice + shippingFee).toLocaleString()}원</Text>
           </View>
         </View>
+        <Button radius={'md'} type="solid" style={{ marginTop: 16 }} color={'#39823E'} onPress={handlePayment}>
+          <MaterialIcons name="payment" size={24} color="white" style={{ marginLeft: 8 }} />
+          お支払い
+        </Button>
       </ScrollView>
     </View>
   )

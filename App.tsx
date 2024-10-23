@@ -1,262 +1,158 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import CommonHeader from './components/header/CommonHeader'
-import BackCommonHeader from './components/header/BackCommonHeader'
-import MarketHeader from './components/header/MarketHeader'
-import {
-  Login,
-  SignUp,
-  EmailCredential,
-  ChangePassword,
-  Market,
-  Menu,
-  ProductsByCategory,
-  ProductDetails,
-  Cart,
-  Search,
-  Notify,
-  Payment,
-  Community,
-  Posts,
-  Post,
-  Write,
-  EditPost,
-  CommunitySearch,
-  Cage,
-  CageDetail
-} from './pages'
 import 'react-native-get-random-values'
+import { useEffect, useRef } from 'react'
+import * as Notifications from 'expo-notifications'
+import MarketStack from './components/stack/MarketStack'
+import CommunityStack from './components/stack/CommunityStack'
+import CageStack from './components/stack/CageStack'
+import LoginStack from './components/stack/LoginStack'
+import { Platform } from 'react-native'
+import * as Device from 'expo-device'
+import Constants from 'expo-constants'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { CartProvider } from './context/CartContext'
+// import * as Linking from 'expo-linking'
 
-const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function MarketStack (): JSX.Element {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Market"
-        component={Market}
-        options={{ header: () => <MarketHeader /> }}
-      />
-      <Stack.Screen
-        name="Menu"
-        component={Menu}
-        options={{ header: () => <BackCommonHeader title="메뉴" /> }}
-      />
-      <Stack.Screen
-        name="Notify"
-        component={Notify}
-        options={{
-          header: () => <BackCommonHeader title='알림'/>
-        }}
-      />
-      <Stack.Screen
-        name="Cart"
-        component={Cart}
-        options={{
-          header: () => <BackCommonHeader title='장바구니'/>
-        }}
-      />
-      <Stack.Screen
-        name="ProductsByCategory"
-        component={ProductsByCategory}
-        options={{
-          header: () => <MarketHeader />
-        }}
-      />
-      <Stack.Screen
-        name="Product"
-        component={ProductDetails}
-        options={{
-          header: () => <MarketHeader />
-        }}
-      />
-      <Stack.Screen
-        name="Search"
-        component={Search}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="Payment"
-        component={Payment}
-        options={{
-          header: () => <BackCommonHeader title='주문/결제'/>
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function CommunityStack (): JSX.Element {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Community"
-        component={Community}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="Posts"
-        component={Posts}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="Post"
-        component={Post}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="Write"
-        component={Write}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="EditPost"
-        component={EditPost}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="CommunitySearch"
-        component={CommunitySearch}
-        options={{
-          headerShown: false
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function CageStack (): JSX.Element {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Cage"
-        component={Cage}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="CageDetail"
-        component={CageDetail}
-        options={{
-          headerShown: false
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function LoginStack (): JSX.Element {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          header: () => <CommonHeader title='로그인'/>
-        }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{
-          header: () => <BackCommonHeader title='회원가입'/>
-        }}
-      />
-      <Stack.Screen
-        name="EmailCredential"
-        component={EmailCredential}
-        options={{
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="ChangePassword"
-        component={ChangePassword}
-        options={{
-          headerShown: false
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  })
+})
 
 const App = (): JSX.Element => {
+  const navigationRef = useRef(null)
+  async function registerForPushNotificationsAsync (): Promise<void> {
+    let token
+
+    if (Platform.OS === 'android') {
+      void Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C'
+      })
+    }
+
+    if (Device.isDevice === true) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync()
+      let finalStatus = existingStatus
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync()
+        finalStatus = status
+      }
+      if (finalStatus !== 'granted') {
+        // Alert.alert("Failed to get push token for push notification!");
+        return
+      }
+
+      token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig?.extra?.eas.projectId
+      })
+    } else {
+      // Alert.alert("Must use physical device for Push Notifications");
+    }
+    if (token?.data === undefined) {
+      return
+    }
+    await AsyncStorage.setItem('notificationToken', token.data)
+  }
+
+  async function saveNotificationToStorage(notification) {
+    const storedNotifications = await AsyncStorage.getItem('notifications');
+    let notificationsArray = storedNotifications ? JSON.parse(storedNotifications) : [];
+    notificationsArray.unshift(notification);
+    await AsyncStorage.setItem('notifications', JSON.stringify(notificationsArray));
+  }
+
+  useEffect(() => {
+    void registerForPushNotificationsAsync()
+    const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log('RESPONSE', response)
+      console.log('NOTIFICATION DATA', response.notification)
+      const url = response.notification.request.content.data.category
+      
+      if (url !== undefined) {
+        console.log('URL', url)
+        if (url === 'login') {
+          // LoginStack으의 LoginScreen으로 이동
+          navigationRef.current?.navigate('LoginTab', { screen: 'Login' })
+        }
+      }
+      saveNotificationToStorage(response.notification)
+    })
+    return () => {
+      subscription.remove()
+    }
+  }, [])
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-            tabBarStyle: {
-              backgroundColor: '#072E0A',
-              borderTopWidth: 1,
-              borderTopColor: '#39823E'
-            }
-          }}
-        >
-          <Tab.Screen
-            name="MarketTab"
-            component={MarketStack}
-            options={{
-              title: '스토어',
-              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
-              tabBarIcon: ({ size }) => (
-                <MaterialIcons name="storefront" color={'#fff'} size={size}/>
-              )
+      <CartProvider>
+        <NavigationContainer ref={navigationRef}>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+              tabBarStyle: {
+                backgroundColor: '#072E0A',
+                borderTopWidth: 1,
+                borderTopColor: '#39823E'
+              }
             }}
-          />
-          <Tab.Screen
-            name="CommunityTab"
-            component={CommunityStack}
-            options={{
-              title: '커뮤니티',
-              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
-              tabBarIcon: ({ size }) => (
-                <MaterialIcons name="groups" color={'#fff'} size={size} />
-              )
-            }}
-          />
-          <Tab.Screen
-            name="CageTab"
-            component={CageStack}
-            options={{
-              title: '사육장 관리',
-              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
-              tabBarIcon: ({ size }) => (
-                <MaterialCommunityIcons name="home-thermometer-outline" color={'#fff'} size={size} />
-              )
-            }}
-          />
-          <Tab.Screen
-            name="LoginTab"
-            component={LoginStack}
-            options={{
-              title: '마이페이지',
-              tabBarLabelStyle: { fontSize: 14, color: '#fff' },
-              tabBarIcon: ({ size }) => (
-                <MaterialIcons name="login" color={'#fff'} size={size} />
-              )
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+          >
+            <Tab.Screen
+              name="MarketTab"
+              component={MarketStack}
+              options={{
+                title: 'ストア',
+                tabBarLabelStyle: { fontSize: 14, color: '#fff' },
+                tabBarIcon: ({ size }) => (
+                  <MaterialIcons name="storefront" color={'#fff'} size={size}/>
+                )
+              }}
+            />
+            <Tab.Screen
+              name="CommunityTab"
+              component={CommunityStack}
+              options={{
+                title: 'コミュニティー',
+                tabBarLabelStyle: { fontSize: 14, color: '#fff' },
+                tabBarIcon: ({ size }) => (
+                  <MaterialIcons name="groups" color={'#fff'} size={size} />
+                )
+              }}
+            />
+            <Tab.Screen
+              name="CageTab"
+              component={CageStack}
+              options={{
+                title: '飼育ケージ',
+                tabBarLabelStyle: { fontSize: 14, color: '#fff' },
+                tabBarIcon: ({ size }) => (
+                  <MaterialCommunityIcons name="home-thermometer-outline" color={'#fff'} size={size} />
+                )
+              }}
+            />
+            <Tab.Screen
+              name="LoginTab"
+              component={LoginStack}
+              options={{
+                title: 'マイページ',
+                tabBarLabelStyle: { fontSize: 14, color: '#fff' },
+                tabBarIcon: ({ size }) => (
+                  <MaterialIcons name="login" color={'#fff'} size={size} />
+                )
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </CartProvider>
     </SafeAreaProvider>
   )
 }

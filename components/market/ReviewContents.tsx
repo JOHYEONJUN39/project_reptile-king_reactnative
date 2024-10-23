@@ -11,14 +11,14 @@ interface ReviewContentProps {
 }
 
 const ReviewContents = ({ reviewData }: ReviewContentProps): JSX.Element => {
-  if (reviewData === null) {
+  if (reviewData === null && reviewData === undefined) {
     return <View><Text>리뷰 데이터가 없습니다.</Text></View>
   }
-  const { totalReview, reviewsByScore, rating } = reviewData
-  const percentageByScore: Record<string, number> = {}
-  for (const score in reviewsByScore) {
-    percentageByScore[score] = reviewsByScore[score] / totalReview
-  }
+  const data = reviewData[0]
+  // const percentageByScore: Record<string, number> = {}
+  // for (const score in reviewsByScore) {
+  //   percentageByScore[score] = reviewsByScore[score] / totalReview
+  // }
   const [pageCount, setPageCount] = useState(10)
   return (
     <View style={styles.container} >
@@ -28,7 +28,7 @@ const ReviewContents = ({ reviewData }: ReviewContentProps): JSX.Element => {
       </View>
       <View style={styles.reviewRatingContainer}>
         <View style={styles.rating}>
-          <Text style={styles.ratingText}>{rating}</Text>
+          <Text style={styles.ratingText}>{datarating}</Text>
           <Rating rating={rating} size={20} />
         </View>
         <Line color='#FF80DB' weight={2} direction='row'/>

@@ -1,20 +1,15 @@
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
-import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { View, StyleSheet, Text } from 'react-native'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-const MarketHeader = (): JSX.Element => {
+const MyPageHeader = (): JSX.Element => {
   const navigation = useNavigation()
   return (
     <View style={styles.header}>
       <View style={styles.headerInner}>
-        <View style={styles.leftIcon}>
-          <Feather name="menu" size={36} color="white" onPress={() => { navigation.navigate('Menu' as never) }}/>
+        <View style={styles.center}>
+          <Text style={styles.placeholder}>マイページ</Text>
         </View>
-        <TouchableOpacity style={styles.searchBox} onPress={() => { navigation.navigate('Search' as never) }}>
-          <Feather name="search" size={20} color="#888" style={styles.searchIcon} />
-          <Text style={styles.placeholder}>検索するキーワードを入力
-          </Text>
-        </TouchableOpacity>
         <View style={styles.rightIcons}>
           <Ionicons
             name="notifications"
@@ -46,10 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 8,
     alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  leftIcon: {
-    width: 40
+    justifyContent: 'center'
   },
   searchBox: {
     flex: 1,
@@ -64,15 +56,21 @@ const styles = StyleSheet.create({
   searchIcon: {
     marginRight: 6
   },
+  center: {
+    alignItems: 'center'
+  },
   rightIcons: {
-    width: 80,
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
+    position: 'absolute',
+    right: 10,
+    flexDirection: 'row'
   },
   placeholder: {
-    fontSize: 16,
-    color: '#888'
+    paddingBottom: 8,
+    fontSize: 22,
+    lineHeight: 32,
+    fontWeight: 'bold',
+    color: '#ffffff'
   }
 })
 
-export default MarketHeader
+export default MyPageHeader

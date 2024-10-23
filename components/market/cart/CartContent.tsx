@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 import QuantitySelector from '../../common/QuantitySelector'
+import { MaterialIcons } from '@expo/vector-icons'
 
 interface CartContentProps {
   id: number
@@ -12,9 +13,10 @@ interface CartContentProps {
   isChecked: boolean
   toggleChecked: () => void
   onQuantityChange: (id: number, quantity: number) => void
+  onRemove: (id: string) => void
 }
 
-const CartContent = ({ id, seller, price, imageUri, productName, isChecked, toggleChecked, onQuantityChange }: CartContentProps): JSX.Element => {
+const CartContent = ({ id, price, imageUri, productName, isChecked, toggleChecked, onQuantityChange, onRemove  }: CartContentProps): JSX.Element => {
   const [quantity, setQuantity] = useState<number>(1)
   const handleQuantityChange = (newQuantity: number): void => {
     setQuantity(newQuantity)
@@ -23,18 +25,22 @@ const CartContent = ({ id, seller, price, imageUri, productName, isChecked, togg
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <CheckBox
-        containerStyle={styles.checkBoxContainer}
-        iconType="material-community"
-        checkedIcon="checkbox-marked"
-        uncheckedIcon="checkbox-blank-outline"
-        checkedColor="#B1D074"
-        uncheckedColor="#fff"
-        checked={isChecked}
-        onPress={toggleChecked}
-        title={seller}
-        textStyle={styles.text}
-      />
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <CheckBox
+          containerStyle={styles.checkBoxContainer}
+          iconType="material-community"
+          checkedIcon="checkbox-marked"
+          uncheckedIcon="checkbox-blank-outline"
+          checkedColor="#B1D074"
+          uncheckedColor="#fff"
+          checked={isChecked}
+          onPress={toggleChecked}
+          textStyle={styles.text}
+        />
+        <TouchableOpacity onPress={() => onRemove(id)} style={{ marginLeft: 10 }}>
+          <MaterialIcons name="close" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.productContainer}>
         <Image
           style={styles.image}
